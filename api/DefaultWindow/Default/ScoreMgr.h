@@ -35,10 +35,21 @@ public:
 		return m_iScore;
 	}
 
+	static int Get_Score2()
+	{
+		return m_iScore2;
+	}
+
 	static void Plus_Score(const int& _coin)
 	{
 		m_iScore += _coin;
 	}
+
+	static void Plus_Score2(const int& _Score2)
+	{
+		m_iScore2 += _Score2;
+	}
+
 	static int Get_Coin()
 	{
 		return m_iCoin;
@@ -77,6 +88,19 @@ public:
 	static float Get_Hp()
 	{
 		return m_fHp;
+	}
+
+	static void Set_Hp2(const float& _Hp)
+	{
+		m_fHp2 = _Hp * 80 + 150;
+	}
+	static void Reset_Hp2()
+	{
+		m_fHp2 = 0;
+	}
+	static float Get_Hp2()
+	{
+		return m_fHp2;
 	}
 
 	static int Get_JellyType()
@@ -123,8 +147,10 @@ public:
 private:
 	static CScoreMgr* m_pInstance;
 	static int m_iScore;
+	static int m_iScore2;
 	static int m_iCoin;
 	static float m_fHp;
+	static float m_fHp2;
 	static int m_iJellyType;
 	static int m_iCookieType;
 	static int m_iHighScore;

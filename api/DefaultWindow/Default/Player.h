@@ -18,7 +18,10 @@ public:
 
 	float		Set_Hp() { return m_fHp; }
 	int			Get_Playertype() { return m_iPlayertype; }
+	int			Get_Cookietype() { return m_eCurState; }
 	void		Get_PlayerHp(float _Hp) { m_fHp = _Hp; }
+	float		Get_PlayerPosx() { return m_tInfo.fX; }
+	float		Get_PlayerPosy() { return m_tInfo.fY; }
 	void		Collision();
 	void		CollisionDevil();
 	void		Get_Itemtype(OBJID _Item);
