@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="99. Header">
+      <UniqueIdentifier>{fbe2a4a3-fba0-4c49-8f48-026bfd31270f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. MainGame">
+      <UniqueIdentifier>{2d3279d5-6d01-45c7-bb99-c63f14a76ad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj">
+      <UniqueIdentifier>{c91568ba-1c51-4366-8827-f9ce8e185221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Player">
+      <UniqueIdentifier>{bc87a0ea-e5c3-4b9c-b118-23af02ef9935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjMgr">
+      <UniqueIdentifier>{e63ceb9e-2874-4246-8e6b-bf59e1fb5e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Line">
+      <UniqueIdentifier>{ede0427a-ae18-43fc-9fb5-d2f28850b88f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Line\LineMgr">
+      <UniqueIdentifier>{0cbb9369-6b11-4290-ab78-5cb2b4d35f19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScrollMgr">
+      <UniqueIdentifier>{66ee1f53-54f8-4476-a501-c210aa23f971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyBmp">
+      <UniqueIdentifier>{4ce3202f-cb4c-4977-aaef-b88b20f2965d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyBmp\BmpMgr">
+      <UniqueIdentifier>{23f3aed0-ba75-4ff6-bcdf-dd4ca583d44d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AbstractFactory">
+      <UniqueIdentifier>{b1bd1413-8de8-4565-b003-9d93c0f1e6c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\BackGround">
+      <UniqueIdentifier>{f92a8ea6-7170-4274-bded-0bf3f16b9de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item">
+      <UniqueIdentifier>{c3529f61-447c-4de1-9d45-f84b5dab4ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\01. Jelly">
+      <UniqueIdentifier>{c74ec3a3-edbe-48ed-97c3-c0e21c9225ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\01. Jelly\JellyMgr">
+      <UniqueIdentifier>{7de8cc5c-f556-4e91-86ed-4fea7757cc5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle">
+      <UniqueIdentifier>{b9720924-806d-4717-9fbf-973dcfd74336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle\00.Fork">
+      <UniqueIdentifier>{384088d7-6f6f-4221-a461-fb02349ad4f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle\00.Fork\ForkMgr">
+      <UniqueIdentifier>{be469fd8-ce6a-4327-9278-53d938ab4d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle\01.Needle">
+      <UniqueIdentifier>{b3790a41-8045-4f0b-90ac-2421c19c5b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle\01.Needle\NeedleMgr">
+      <UniqueIdentifier>{97e7f486-d89a-4a5c-895b-8f9ec71d3efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{f2194ddc-d7f3-4235-bb5c-2cd185031976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene">
+      <UniqueIdentifier>{b7d75002-b032-4501-bb20-fdf2d483b768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\0.Logo">
+      <UniqueIdentifier>{aa97149c-c34e-4b53-8ff0-9629603e15c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\01.Robby">
+      <UniqueIdentifier>{4c9cc48c-1311-4395-bc8c-3d556c61869f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\03.Stage">
+      <UniqueIdentifier>{98dc4718-e956-43ce-a95f-6ef511929449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\SceneMgr">
+      <UniqueIdentifier>{7160ff91-b10d-49f9-a0ad-e8aa69ce8368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{d17a46db-8d65-4313-b0d9-382823aba2f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UiMgr">
+      <UniqueIdentifier>{cd4215fb-ca45-4e85-a1fd-812519361788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04. Tile">
+      <UniqueIdentifier>{37f5459a-e972-47b1-94f5-8fc2e088b441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04. Tile\TileMgr">
+      <UniqueIdentifier>{d0548086-8c90-4285-9609-8e7112401fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04. Tile\TileMgr\TileFactory">
+      <UniqueIdentifier>{42df5083-ca87-42c2-be49-a2bc72c7939a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\ScoreMgr">
+      <UniqueIdentifier>{6c364140-4e87-4ec2-83ea-cbc04a3a3b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\02.Coin">
+      <UniqueIdentifier>{c531b8e6-6ace-4477-a976-d5cb153eb701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\02.Coin\CoinMgr">
+      <UniqueIdentifier>{8fa2b1d7-7bb6-4f13-a397-d07571a7eed7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05.Pet">
+      <UniqueIdentifier>{70f0801b-4374-4d35-b37c-1ffed767f2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\05. DevilJellies">
+      <UniqueIdentifier>{bebbd017-67cc-4bb9-baf6-4f315c8564e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\05. DevilJellies\DevilJelliesMgr">
+      <UniqueIdentifier>{98eb068d-f66b-40f5-bb6a-86369edf2f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\13. Heal">
+      <UniqueIdentifier>{4918a070-ae21-4611-aee5-b6028ccc2a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\14.Boost">
+      <UniqueIdentifier>{6699dff2-0c79-48e1-965b-db50e6de19cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\15. GIGA">
+      <UniqueIdentifier>{3f2b9b1f-42dc-493f-a70e-d13ad607d381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\16. Magnet">
+      <UniqueIdentifier>{e6abe74a-b79c-4448-b776-78d0aa775270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\04.Score">
+      <UniqueIdentifier>{f7275581-d8b8-4fa6-9e2f-4326670e04ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\06. DevilCoin">
+      <UniqueIdentifier>{4b1fff6f-c9f3-4a0a-aceb-ba966e00c599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\17. small Heal">
+      <UniqueIdentifier>{aee6137e-1360-45ea-8abe-deb41649dfb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Item\03. Gold">
+      <UniqueIdentifier>{7754e8fd-a751-4d1c-91e2-53314b11de6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle\02. PunKin">
+      <UniqueIdentifier>{53cdfe42-2230-4f65-aa77-ea106b71dca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle\03. Air">
+      <UniqueIdentifier>{4a01001d-4780-4da7-8b7a-995eeca2bff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Obstacle\04. Frog">
+      <UniqueIdentifier>{4495147c-33d7-4cef-af8f-8d8bd4c34f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. MainGame\SoundMgr">
+      <UniqueIdentifier>{74fa05f3-e2c7-455f-8105-9f5b03352995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Player\Bullet">
+      <UniqueIdentifier>{e24a88d1-bcfc-459a-aa0c-ba88505b7ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Player\Bullet\METEOR">
+      <UniqueIdentifier>{82e6ea77-959a-4348-9c12-41263665dfa4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Default.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Functor.h">
+      <Filter>99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>00. MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>01. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjMgr.h">
+      <Filter>ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Line</Filter>
+    </ClInclude>
+    <ClInclude Include="LineMgr.h">
+      <Filter>Line\LineMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollMgr.h">
+      <Filter>ScrollMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBmp.h">
+      <Filter>MyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpMgr.h">
+      <Filter>MyBmp\BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CAbstractFactory.h">
+      <Filter>AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>01. Obj\04. Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMgr.h">
+      <Filter>01. Obj\04. Tile\TileMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="TileFactory.h">
+      <Filter>01. Obj\04. Tile\TileMgr\TileFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>01. Obj\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Jelly.h">
+      <Filter>01. Obj\01.Item\01. Jelly</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>01. Obj\01.Item</Filter>
+    </ClInclude>
+    <ClInclude Include="JellyMgr.h">
+      <Filter>01. Obj\01.Item\01. Jelly\JellyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="JellyFactory.h">
+      <Filter>01. Obj\01.Item\01. Jelly</Filter>
+    </ClInclude>
+    <ClInclude Include="Fork.h">
+      <Filter>01. Obj\03.Obstacle\00.Fork</Filter>
+    </ClInclude>
+    <ClInclude Include="ForkMgr.h">
+      <Filter>01. Obj\03.Obstacle\00.Fork\ForkMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Needle.h">
+      <Filter>01. Obj\03.Obstacle\01.Needle</Filter>
+    </ClInclude>
+    <ClInclude Include="NeedleMgr.h">
+      <Filter>01. Obj\03.Obstacle\01.Needle\NeedleMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>02.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>02.Scene\0.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="Robby.h">
+      <Filter>02.Scene\01.Robby</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>02.Scene\03.Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>02.Scene\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Ui.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UiMgr.h">
+      <Filter>UI\UiMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreMgr.h">
+      <Filter>UI\ScoreMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>01. Obj\01.Item\02.Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinMgr.h">
+      <Filter>01. Obj\01.Item\02.Coin\CoinMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Heal.h">
+      <Filter>01. Obj\01.Item\13. Heal</Filter>
+    </ClInclude>
+    <ClInclude Include="Boost.h">
+      <Filter>01. Obj\01.Item\14.Boost</Filter>
+    </ClInclude>
+    <ClInclude Include="Pet.h">
+      <Filter>01. Obj\05.Pet</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilJellies.h">
+      <Filter>01. Obj\01.Item\05. DevilJellies</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilJelliesMgr.h">
+      <Filter>01. Obj\01.Item\05. DevilJellies\DevilJelliesMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Giga.h">
+      <Filter>01. Obj\01.Item\15. GIGA</Filter>
+    </ClInclude>
+    <ClInclude Include="Magnet.h">
+      <Filter>01. Obj\01.Item\16. Magnet</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>02.Scene\04.Score</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilCoinMgr.h">
+      <Filter>01. Obj\01.Item\06. DevilCoin</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilCoin.h">
+      <Filter>01. Obj\01.Item\06. DevilCoin</Filter>
+    </ClInclude>
+    <ClInclude Include="Small.h">
+      <Filter>01. Obj\01.Item\17. small Heal</Filter>
+    </ClInclude>
+    <ClInclude Include="Gold.h">
+      <Filter>01. Obj\01.Item\03. Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldMgr.h">
+      <Filter>01. Obj\01.Item\03. Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="Pumkin.h">
+      <Filter>01. Obj\03.Obstacle\02. PunKin</Filter>
+    </ClInclude>
+    <ClInclude Include="PumkinMgr.h">
+      <Filter>01. Obj\03.Obstacle\02. PunKin</Filter>
+    </ClInclude>
+    <ClInclude Include="AirMgr.h">
+      <Filter>01. Obj\03.Obstacle\03. Air</Filter>
+    </ClInclude>
+    <ClInclude Include="Air.h">
+      <Filter>01. Obj\03.Obstacle\03. Air</Filter>
+    </ClInclude>
+    <ClInclude Include="Frog.h">
+      <Filter>01. Obj\03.Obstacle\04. Frog</Filter>
+    </ClInclude>
+    <ClInclude Include="FrogMgr.h">
+      <Filter>01. Obj\03.Obstacle\04. Frog</Filter>
+    </ClInclude>
+    <ClInclude Include="Giga2.h">
+      <Filter>01. Obj\01.Item\15. GIGA</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundMgr.h">
+      <Filter>00. MainGame\SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>01. Obj\00. Player\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMgr.h">
+      <Filter>01. Obj\00. Player\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Meteor.h">
+      <Filter>01. Obj\00. Player\Bullet\METEOR</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Default.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>00. MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>01. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMgr.cpp">
+      <Filter>ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Line</Filter>
+    </ClCompile>
+    <ClCompile Include="LineMgr.cpp">
+      <Filter>Line\LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollMgr.cpp">
+      <Filter>ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBmp.cpp">
+      <Filter>MyBmp</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpMgr.cpp">
+      <Filter>MyBmp\BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>01. Obj\04. Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMgr.cpp">
+      <Filter>01. Obj\04. Tile\TileMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>01. Obj\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Jelly.cpp">
+      <Filter>01. Obj\01.Item\01. Jelly</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>01. Obj\01.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="JellyMgr.cpp">
+      <Filter>01. Obj\01.Item\01. Jelly\JellyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Fork.cpp">
+      <Filter>01. Obj\03.Obstacle\00.Fork</Filter>
+    </ClCompile>
+    <ClCompile Include="ForkMgr.cpp">
+      <Filter>01. Obj\03.Obstacle\00.Fork\ForkMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Needle.cpp">
+      <Filter>01. Obj\03.Obstacle\01.Needle</Filter>
+    </ClCompile>
+    <ClCompile Include="NeedleMgr.cpp">
+      <Filter>01. Obj\03.Obstacle\01.Needle\NeedleMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>02.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>02.Scene\0.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="Robby.cpp">
+      <Filter>02.Scene\01.Robby</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>02.Scene\03.Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>02.Scene\SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Ui.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UiMgr.cpp">
+      <Filter>UI\UiMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreMgr.cpp">
+      <Filter>UI\ScoreMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>01. Obj\01.Item\02.Coin</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinMgr.cpp">
+      <Filter>01. Obj\01.Item\02.Coin\CoinMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Heal.cpp">
+      <Filter>01. Obj\01.Item\13. Heal</Filter>
+    </ClCompile>
+    <ClCompile Include="Boost.cpp">
+      <Filter>01. Obj\01.Item\14.Boost</Filter>
+    </ClCompile>
+    <ClCompile Include="Pet.cpp">
+      <Filter>01. Obj\05.Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilJellies.cpp">
+      <Filter>01. Obj\01.Item\05. DevilJellies</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilJelliesMgr.cpp">
+      <Filter>01. Obj\01.Item\05. DevilJellies\DevilJelliesMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Giga.cpp">
+      <Filter>01. Obj\01.Item\15. GIGA</Filter>
+    </ClCompile>
+    <ClCompile Include="Magnet.cpp">
+      <Filter>01. Obj\01.Item\16. Magnet</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>02.Scene\04.Score</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilCoin.cpp">
+      <Filter>01. Obj\01.Item\06. DevilCoin</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilCoinMgr.cpp">
+      <Filter>01. Obj\01.Item\06. DevilCoin</Filter>
+    </ClCompile>
+    <ClCompile Include="Small.cpp">
+      <Filter>01. Obj\01.Item\17. small Heal</Filter>
+    </ClCompile>
+    <ClCompile Include="Gold.cpp">
+      <Filter>01. Obj\01.Item\03. Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldMgr.cpp">
+      <Filter>01. Obj\01.Item\03. Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="Pumkin.cpp">
+      <Filter>01. Obj\03.Obstacle\02. PunKin</Filter>
+    </ClCompile>
+    <ClCompile Include="PumkinMgr.cpp">
+      <Filter>01. Obj\03.Obstacle\02. PunKin</Filter>
+    </ClCompile>
+    <ClCompile Include="AirMgr.cpp">
+      <Filter>01. Obj\03.Obstacle\03. Air</Filter>
+    </ClCompile>
+    <ClCompile Include="Air.cpp">
+      <Filter>01. Obj\03.Obstacle\03. Air</Filter>
+    </ClCompile>
+    <ClCompile Include="Frog.cpp">
+      <Filter>01. Obj\03.Obstacle\04. Frog</Filter>
+    </ClCompile>
+    <ClCompile Include="FrogMgr.cpp">
+      <Filter>01. Obj\03.Obstacle\04. Frog</Filter>
+    </ClCompile>
+    <ClCompile Include="Giga2.cpp">
+      <Filter>01. Obj\01.Item\15. GIGA</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundMgr.cpp">
+      <Filter>00. MainGame\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>01. Obj\00. Player\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMgr.cpp">
+      <Filter>01. Obj\00. Player\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Meteor.cpp">
+      <Filter>01. Obj\00. Player\Bullet\METEOR</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Default.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Default.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
