@@ -624,7 +624,7 @@ void CPlayer::Render(HDC hDC)
 	}
 	else if ((m_EndCount + 5000 < GetTickCount()) && m_bEnd == true && m_bCut == false)	//¸¶³à¸ðµå
 	{
-		//CSceneMgr::Get_Instance()->Scene_Change(SC_SCORE);
+		CSceneMgr::Get_Instance()->Scene_Change(SC_SCORE);
 		m_bCut = true;
 		m_eCurState = WITCH;
 		m_tInfo.fX = 38700;
