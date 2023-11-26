@@ -1,7 +1,3 @@
-#pragma once
-#pragma once
-/*** 여기서부터 이 책의 모든 예제에서 공통으로 포함하여 사용하는 코드이다. ***/
-
 #define _CRT_SECURE_NO_WARNINGS // 구형 C 함수 사용 시 경고 끄기
 #define _WINSOCK_DEPRECATED_NO_WARNINGS // 구형 소켓 API 사용 시 경고 끄기
 
@@ -54,6 +50,3 @@ void err_display(int errcode)
 	printf("[오류] %s\n", (char*)lpMsgBuf);
 	LocalFree(lpMsgBuf);
 }
-
-/*** 여기까지가 이 책의 모든 예제에서 공통으로 포함하여 사용하는 코드이다. ***/
-/*** 2장 이후의 예제들은 Common.h를 포함하는 방식으로 이 코드를 사용한다.  ***/
