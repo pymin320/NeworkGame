@@ -4,7 +4,11 @@
 #include "stdafx.h"
 #include "Default.h"
 #include "MainGame.h"
+#include "Common.h"
 
+char* SERVERIP = (char*)"127.0.0.1";
+#define SERVERPORT 9000
+#define BUFSIZE    512
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -20,10 +24,48 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
 {
+    int retval;
+
+    // 윈속 초기화
+    WSADATA wsa;
+    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+        return 1;
+
+    // 소켓 생성
+    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock == INVALID_SOCKET) err_quit("socket()");
+
+    // connect()
+    struct sockaddr_in serveraddr;
+    memset(&serveraddr, 0, sizeof(serveraddr));
+    serveraddr.sin_family = AF_INET;
+    inet_pton(AF_INET, SERVERIP, &serveraddr.sin_addr);
+    serveraddr.sin_port = htons(SERVERPORT);
+    retval = connect(sock, (struct sockaddr*)&serveraddr, sizeof(serveraddr));
+    if (retval == SOCKET_ERROR) err_quit("connect()");
+
+    // 데이터 통신에 사용할 변수
+    char buf[BUFSIZE + 1];
+    int len;
+
+    // 서버와 데이터 통신
+
+    strcpy_s(buf, "게임시작");
+
+
+    // 데이터 보내기
+    retval = send(sock, buf, (int)strlen(buf), 0);
+    if (retval == SOCKET_ERROR) {
+        err_display("send()");
+    }
+
+    memset(buf, 0, sizeof(buf));
+
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -35,7 +77,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // 응용 프로그램 초기화를 수행합니다.
-    if (!InitInstance (hInstance, nCmdShow))
+    if (!InitInstance(hInstance, nCmdShow))
     {
         return FALSE;
     }
@@ -43,51 +85,56 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DEFAULT));
 
     MSG msg;
-	msg.message = WM_NULL;
+    msg.message = WM_NULL;
 
-	CMainGame*	pMainGame = new CMainGame;
-	
-	if (nullptr == pMainGame)
-		return FALSE;
+    CMainGame* pMainGame = new CMainGame;
 
-	pMainGame->Initialize();
+    if (nullptr == pMainGame)
+        return FALSE;
 
-	DWORD		dwOldTime = GetTickCount();
+    pMainGame->Initialize();
 
-
-
-	while (true)
-	{
-
-		if(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			if (WM_QUIT == msg.message)
-				break;
-
-			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) 
-			{
-				TranslateMessage(&msg);	
-				DispatchMessage(&msg);	
-			}
-		}
-
-		else
-		{
-			if (dwOldTime + 10 < GetTickCount())
-			{
-				pMainGame->Update();
-				pMainGame->Late_Update();
-				pMainGame->Render();
-
-				dwOldTime = GetTickCount();
-			}			
-		}
-	}
+    DWORD		dwOldTime = GetTickCount();
 
 
-	Safe_Delete<CMainGame*>(pMainGame);
 
-    return (int) msg.wParam;
+    while (true)
+    {
+
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        {
+            if (WM_QUIT == msg.message)
+                break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+
+        else
+        {
+            if (dwOldTime + 10 < GetTickCount())
+            {
+                pMainGame->Update();
+                pMainGame->Late_Update();
+                pMainGame->Render();
+
+                dwOldTime = GetTickCount();
+            }
+        }
+    }
+
+
+    Safe_Delete<CMainGame*>(pMainGame);
+
+    // 소켓 닫기
+    closesocket(sock);
+    // 윈속 종료
+    WSACleanup();
+
+    return (int)msg.wParam;
 }
 
 

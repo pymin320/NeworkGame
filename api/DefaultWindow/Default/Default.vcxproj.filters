@@ -369,6 +369,9 @@
     <ClInclude Include="Meteor.h">
       <Filter>01. Obj\00. Player\Bullet\METEOR</Filter>
     </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
