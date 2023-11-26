@@ -16,7 +16,7 @@ public:
 	list<CObj*>	Get_Ui_List() { return m_listUi; }
 
 public:
-	static		CUiMgr*		Get_Instance(void)
+	static		CUiMgr* Get_Instance(void)
 	{
 		if (!m_pInstance)
 		{
@@ -36,6 +36,6 @@ public:
 	}
 
 private:
-	static CUiMgr*			m_pInstance;
+	static CUiMgr* m_pInstance;
 	list<CObj*>				m_listUi;
 };

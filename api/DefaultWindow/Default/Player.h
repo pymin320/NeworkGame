@@ -11,14 +11,17 @@ public:
 
 public:
 	virtual void Initialize(void) override;
-	virtual const int&&	 Update(void) override;
+	virtual const int&& Update(void) override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 	virtual void Late_Update(void) override;
 
 	float		Set_Hp() { return m_fHp; }
 	int			Get_Playertype() { return m_iPlayertype; }
+	int			Get_Cookietype() { return m_eCurState; }
 	void		Get_PlayerHp(float _Hp) { m_fHp = _Hp; }
+	float		Get_PlayerPosx() { return m_tInfo.fX; }
+	float		Get_PlayerPosy() { return m_tInfo.fY; }
 	void		Collision();
 	void		CollisionDevil();
 	void		Get_Itemtype(OBJID _Item);
@@ -26,7 +29,7 @@ public:
 
 	bool		Set_Endgame() { return m_bEndgame; }
 	bool		Cutscene() { return m_bCut; }
-	
+
 	bool		End() { return m_bCutScene2; }
 
 private:
@@ -143,4 +146,3 @@ private:
 	int						m_iEnd2;
 	bool					m_bEnd2;
 };
-
