@@ -189,7 +189,7 @@ const int&& CPlayer::Update(void)
 		m_fDevilRun += m_fRunplus;
 		if (m_fDevilRun <= 00)
 			m_fRunplus = 6.f;
-		else if(m_fDevilRun >= 450)
+		else if (m_fDevilRun >= 450)
 			m_fRunplus = -6.f;
 
 		if (m_iRunCount + 10000 == GetTickCount())
@@ -198,29 +198,29 @@ const int&& CPlayer::Update(void)
 			m_fRunplus = 6.0f;
 		}
 	}
-		
+
 
 	if (m_eCurState != WITCH)
 	{
 		m_fHp -= 0.1f;
 	}
-	
+
 
 	m_tFontInfo.fX = m_tInfo.fX - 30;
 	m_tFontInfo.fY = m_tInfo.fY - 120;
 
-	if (m_bCollision == true && m_iPlayertype != BOOST && m_eCurState != DEVIL  && m_eCurState != WITCH )
+	if (m_bCollision == true && m_iPlayertype != BOOST && m_eCurState != DEVIL && m_eCurState != WITCH)
 	{
 		m_fSpeed = 3.5f;
 	}
-	
+
 
 
 	if (m_iColliTime + 1500 <= GetTickCount())
 	{
 		m_bCollision = false;
 		m_iColliFrame = 0;
-		if(m_fSpeed == 3.5f)
+		if (m_fSpeed == 3.5f)
 			m_fSpeed += 3.5f;
 	}
 
@@ -256,7 +256,7 @@ const int&& CPlayer::Update(void)
 		}
 		if (m_iDeadCount + 2000 < GetTickCount() && m_iZombieLife == 0 && m_fHp <= 0)
 		{
-				m_bEndgame = true;
+			m_bEndgame = true;
 		}
 	}
 
@@ -290,7 +290,7 @@ const int&& CPlayer::Update(void)
 	{
 		m_iPaFrame = 5;
 	}
-	
+
 
 
 
@@ -300,7 +300,7 @@ const int&& CPlayer::Update(void)
 		m_iDevilCount = GetTickCount();
 		m_iDevilFrame = 0;
 	}
-	
+
 
 	else if (m_iDevilCount + 70 < GetTickCount() && m_eCurState == DEVIL)
 	{
@@ -404,7 +404,7 @@ const int&& CPlayer::Update(void)
 
 
 
-	if ( 750 <= m_tRect.bottom)
+	if (750 <= m_tRect.bottom)
 	{
 		m_fHp = 0;
 		m_fSpeed = 0;
@@ -426,7 +426,7 @@ const int&& CPlayer::Update(void)
 
 	if (m_iScrollCount + 110 > GetTickCount() && m_iScrollCount + 10 < GetTickCount() && m_bScrollY == true)
 	{
-			CScrollMgr::Get_Instance()->Set_ScrollY(2);
+		CScrollMgr::Get_Instance()->Set_ScrollY(2);
 	}
 	else if (m_iScrollCount + 210 > GetTickCount() && m_iScrollCount + 110 < GetTickCount() && m_bScrollY == true)
 	{
@@ -512,7 +512,7 @@ const int&& CPlayer::Update(void)
 		}
 	}
 
-		return OBJ_NOEVENT;
+	return OBJ_NOEVENT;
 }
 
 void CPlayer::Late_Update(void)
@@ -559,9 +559,9 @@ void CPlayer::Collision()
 
 void CPlayer::CollisionDevil()
 {
-	if(m_eCurState != DEVIL)
+	if (m_eCurState != DEVIL)
 		--m_iDevilJellyCount;
-	if (m_iDevilJellyCount == 0 && m_eCurState!= DEVIL)
+	if (m_iDevilJellyCount == 0 && m_eCurState != DEVIL)
 	{
 		m_eCurState = DEVIL;
 		m_iDevilJellyCount = 12;
@@ -581,9 +581,9 @@ void CPlayer::Get_Itemtype(OBJID _Item)
 		m_fSpeed += 10;
 		break;
 	case OBJ_ITEM_GIGA:
-			m_iPlayertype = GIGA;
-			m_tInfo.fCY *= 2;
-			m_tInfo.fCX *= 2;
+		m_iPlayertype = GIGA;
+		m_tInfo.fCY *= 2;
+		m_tInfo.fCX *= 2;
 		break;
 	case OBJ_ITEM_GIGA2:
 		m_iPlayertype = GIGA;
@@ -624,7 +624,7 @@ void CPlayer::Render(HDC hDC)
 	}
 	else if ((m_EndCount + 5000 < GetTickCount()) && m_bEnd == true && m_bCut == false)	//마녀모드
 	{
-		//CSceneMgr::Get_Instance()->Scene_Change(SC_SCORE);
+		CSceneMgr::Get_Instance()->Scene_Change(SC_SCORE);
 		m_bCut = true;
 		m_eCurState = WITCH;
 		m_tInfo.fX = 38700;
@@ -665,7 +665,7 @@ void CPlayer::Render(HDC hDC)
 
 	HDC		hMemDC3 = CBmpMgr::Get_Instance()->Find_Image(L"Font_Devil");
 	HDC		hMemDC4 = CBmpMgr::Get_Instance()->Find_Image(L"Devil");
-	HDC		hMemDC6	= CBmpMgr::Get_Instance()->Find_Image(L"DevilGigah");
+	HDC		hMemDC6 = CBmpMgr::Get_Instance()->Find_Image(L"DevilGigah");
 	HDC		hMemDC7 = CBmpMgr::Get_Instance()->Find_Image(L"zombieRevive");
 
 
@@ -686,7 +686,7 @@ void CPlayer::Render(HDC hDC)
 			(int)m_tFontInfo.fCY,
 			RGB(255, 0, 200));
 	}
-	else if(m_eCurState != WITCH)
+	else if (m_eCurState != WITCH)
 	{
 		GdiTransparentBlt(hDC,
 			int(m_tFontRect.left + iScrollX - 32),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -694,7 +694,7 @@ void CPlayer::Render(HDC hDC)
 			int(m_tFontInfo.fCX),
 			int(m_tFontInfo.fCY),
 			hMemDC3,
-			(0 + m_iDevilJellyCount / 10 * 32) ,			// 비트맵 출력 시작 좌표, X,Y
+			(0 + m_iDevilJellyCount / 10 * 32),			// 비트맵 출력 시작 좌표, X,Y
 			0,
 			(int)m_tFontInfo.fCX,		// 복사할 비트맵의 가로, 세로 길이
 			(int)m_tFontInfo.fCY,
@@ -783,7 +783,7 @@ void CPlayer::Render(HDC hDC)
 			int(360 + 70),
 			int(m_tInfo.fCY + 60),
 			hMemDC4,
-			m_iDevilFrame * 360 ,	
+			m_iDevilFrame * 360,
 			100,
 			(int)360 + 70,
 			(int)m_tInfo.fCY + 60,
@@ -822,7 +822,7 @@ void CPlayer::Render(HDC hDC)
 		GdiTransparentBlt(hDC,
 			int(m_tRect.left + iScrollX),	// 2,3 인자 :  복사받을 위치 X, Y
 			int(m_tRect.top),
-			int(m_tInfo.fCX+100),
+			int(m_tInfo.fCX + 100),
 			int(m_tInfo.fCY),
 			hMemDC,
 			m_tFrame.iFrameStart * 366 + 1520,			// 비트맵 출력 시작 좌표, X,Y
@@ -834,7 +834,7 @@ void CPlayer::Render(HDC hDC)
 	else if (m_iPlayertype == DEAD)
 	{
 		GdiTransparentBlt(hDC,
-			int(m_tRect.left + iScrollX),	
+			int(m_tRect.left + iScrollX),
 			int(m_tRect.top),
 			int(m_tInfo.fCX + 50),
 			int(m_tInfo.fCY),
@@ -862,10 +862,10 @@ void CPlayer::Render(HDC hDC)
 				(int)m_tInfo.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tInfo.fCY,
 				RGB(255, 0, 200));
-			if(m_iColliTime + 30 < GetTickCount())
+			if (m_iColliTime + 30 < GetTickCount())
 				++m_iColliFrame;
 		}
-		else if(m_iPlayertype == GIGA)
+		else if (m_iPlayertype == GIGA)
 		{
 			GdiTransparentBlt(hDC,
 				int(m_tRect.left + iScrollX),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -879,7 +879,7 @@ void CPlayer::Render(HDC hDC)
 				(int)m_tInfo.fCY,
 				RGB(255, 0, 200));
 		}
-		else  if(m_eCurState != WITCH)
+		else  if (m_eCurState != WITCH)
 		{
 			GdiTransparentBlt(hDC,
 				int(m_tRect.left + iScrollX),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -1016,7 +1016,7 @@ void CPlayer::Render(HDC hDC)
 		}
 
 
-		else 
+		else
 		{
 			HDC		hMemDC8 = CBmpMgr::Get_Instance()->Find_Image(L"PWitch");
 			GdiTransparentBlt(hDC,
@@ -1093,7 +1093,7 @@ void CPlayer::Key_Input(void)
 		m_bSlide = true;
 		return;
 	}
-	else if(m_iPlayertype != GIGA && m_eCurState != WITCH)
+	else if (m_iPlayertype != GIGA && m_eCurState != WITCH)
 	{
 		m_tInfo.fCX = 150.f;
 		m_tInfo.fCY = 170;
@@ -1112,14 +1112,14 @@ void CPlayer::Jumping(void)
 	{
 		m_tInfo.fY -= m_fJumpPower * m_fJumpTime - 7.7f * m_fJumpTime * m_fJumpTime * 0.5f;
 		m_fJumpTime += 0.1f;
-		
+
 		if (bLineCol && (fY < m_tRect.bottom))
 		{
 			m_eCurState = WALK;
 			m_fJumpTime = 0.f;
 			m_tRect.bottom = LONG(fY);
 
-			if(m_iPlayertype == GIGA)
+			if (m_iPlayertype == GIGA)
 				m_bScrollY = true;
 		}
 	}
@@ -1180,10 +1180,10 @@ void CPlayer::Jumping(void)
 	else if (!bLineCol)
 	{
 		m_tInfo.fY += 20;
-		if(m_tRect.bottom <= 0)
+		if (m_tRect.bottom <= 0)
 			m_fSpeed = 0;
 	}
-	
+
 }
 
 

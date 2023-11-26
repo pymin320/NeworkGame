@@ -11,7 +11,7 @@ public:
 
 public:
 	virtual void Initialize(void) override;
-	virtual const int&&	 Update(void) override;
+	virtual const int&& Update(void) override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 	virtual void Late_Update(void) override;
@@ -29,7 +29,7 @@ public:
 
 	bool		Set_Endgame() { return m_bEndgame; }
 	bool		Cutscene() { return m_bCut; }
-	
+
 	bool		End() { return m_bCutScene2; }
 
 private:
@@ -146,4 +146,3 @@ private:
 	int						m_iEnd2;
 	bool					m_bEnd2;
 };
-
