@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "Default.h"
 #include "MainGame.h"
-#include "Common.h"
+#include "NetworkManager.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 #define SERVERPORT 9000
@@ -37,7 +37,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 소켓 생성
     SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock == INVALID_SOCKET) err_quit("socket()");
+    //if (sock == INVALID_SOCKET) err_quit("socket()");
 
     // connect()
     struct sockaddr_in serveraddr;
@@ -46,7 +46,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     inet_pton(AF_INET, SERVERIP, &serveraddr.sin_addr);
     serveraddr.sin_port = htons(SERVERPORT);
     retval = connect(sock, (struct sockaddr*)&serveraddr, sizeof(serveraddr));
-    if (retval == SOCKET_ERROR) err_quit("connect()");
+   // if (retval == SOCKET_ERROR) err_quit("connect()");
 
     // 데이터 통신에 사용할 변수
     char buf[BUFSIZE + 1];
@@ -60,7 +60,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 데이터 보내기
     retval = send(sock, buf, (int)strlen(buf), 0);
     if (retval == SOCKET_ERROR) {
-        err_display("send()");
+       // err_display("send()");
     }
 
     memset(buf, 0, sizeof(buf));
@@ -120,6 +120,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 pMainGame->Update();
                 pMainGame->Late_Update();
                 pMainGame->Render();
+
+                if (CNetworkManager::Get_Instance()->Get_OppReady())
+                {
+                    CNetworkManager::Get_Instance()->Send_OppReady(sock, CNetworkManager::Get_Instance()->Get_OppReady());
+                    if (CNetworkManager::Get_Instance()->Recv_AllReady(sock, buf)) {
+                        CNetworkManager::Get_Instance()->Set_AllReady(true);
+                    }
+                }
 
                 dwOldTime = GetTickCount();
             }
