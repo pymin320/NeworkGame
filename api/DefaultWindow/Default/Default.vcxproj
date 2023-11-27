@@ -159,6 +159,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinMgr.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Common.h" />
     <ClInclude Include="Default.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DevilCoin.h" />
@@ -190,8 +191,10 @@
     <ClInclude Include="MyBmp.h" />
     <ClInclude Include="Needle.h" />
     <ClInclude Include="NeedleMgr.h" />
+    <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
+    <ClInclude Include="Opp.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Pumkin.h" />
@@ -252,8 +255,10 @@
     <ClCompile Include="MyBmp.cpp" />
     <ClCompile Include="Needle.cpp" />
     <ClCompile Include="NeedleMgr.cpp" />
+    <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
+    <ClCompile Include="Opp.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Pumkin.cpp" />

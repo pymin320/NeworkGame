@@ -2,7 +2,7 @@
 #include "UiMgr.h"
 #include "CAbstractFactory.h"
 
-CUiMgr*	CUiMgr::m_pInstance = nullptr;
+CUiMgr* CUiMgr::m_pInstance = nullptr;
 
 CUiMgr::CUiMgr()
 {
@@ -16,7 +16,7 @@ CUiMgr::~CUiMgr()
 
 void CUiMgr::Initialize()
 {
-	CObj*	pUi = CAbstractFactory<CUi>::Create();
+	CObj* pUi = CAbstractFactory<CUi>::Create();
 	m_listUi.push_back(pUi);
 }
 
