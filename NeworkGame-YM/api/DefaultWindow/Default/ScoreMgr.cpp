@@ -11,7 +11,6 @@ int CScoreMgr::m_iCookieType(COFFEECOOKIE);
 int CScoreMgr::m_iHighScore(1);
 int CScoreMgr::m_iMaxCoin(0);
 
-
 CScoreMgr::CScoreMgr()
 {
 }

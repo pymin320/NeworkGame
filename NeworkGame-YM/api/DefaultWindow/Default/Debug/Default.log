@@ -1,25 +1,4 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(Default.vcxproj, WINPI.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
-  Player.cpp
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(188,18): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(235,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(245,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(257,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(283,27): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(305,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(337,31): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(382,55): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(427,27): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(427,67): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(431,32): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(431,73): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(436,32): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(453,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(468,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(483,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(507,24): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(551,29): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(625,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(929,28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(612): warning C4715: 'CPlayer::Set_State': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Player.cpp(515): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+﻿  Default.cpp
+C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Default.cpp(24,34): warning C4477: 'sprintf_s' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'double'입니다.
+C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Default.cpp(72,9): warning C4101: 'len' :참조되지 않은 지역 변수입니다.
   Default.vcxproj -> C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Debug\WINAPI.exe

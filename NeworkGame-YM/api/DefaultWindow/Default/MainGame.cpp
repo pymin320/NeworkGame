@@ -18,9 +18,7 @@ CMainGame::CMainGame()
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	m_iFPS = 0;
 	m_fTime = 0;
-
 }
-
 
 CMainGame::~CMainGame()
 {

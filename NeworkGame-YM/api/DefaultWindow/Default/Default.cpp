@@ -5,11 +5,30 @@
 #include "Default.h"
 #include "MainGame.h"
 #include "Common.h"
+#include "ScoreMgr.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 #define SERVERPORT 9000
 #define BUFSIZE    512
 #define MAX_LOADSTRING 100
+
+// 클라이언트에서 서버로 데이터를 전송하는 함수
+void SendGameDataToServer(SOCKET sock)
+{
+    // 여기에 클라이언트의 게임 데이터를 생성하는 로직을 추가
+    // 예: 현재 체력, 점수, 코인, 쿠키 타입 등의 정보를 서버로 전송
+    // 데이터를 문자열로 만들어서 서버로 전송
+
+    // 예시: 현재 체력이 100, 점수가 500인 경우
+    char sendData[BUFSIZE];
+    sprintf_s(sendData, BUFSIZE, "체력:%d, 점수:%d, 코인:%d ", CScoreMgr::Get_Hp(), CScoreMgr::Get_Coin(), CScoreMgr::Get_Score());
+
+    // 데이터 보내기
+    int retval = send(sock, sendData, (int)strlen(sendData), 0);
+    if (retval == SOCKET_ERROR) {
+        err_display("send()");
+    }
+}
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -88,6 +107,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     msg.message = WM_NULL;
 
     CMainGame* pMainGame = new CMainGame;
+    CPlayer* cPlayer = new CPlayer;
 
     if (nullptr == pMainGame)
         return FALSE;
@@ -95,8 +115,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     pMainGame->Initialize();
 
     DWORD		dwOldTime = GetTickCount();
-
-
 
     while (true)
     {
@@ -117,6 +135,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             if (dwOldTime + 10 < GetTickCount())
             {
+                SendGameDataToServer(sock);
+
                 pMainGame->Update();
                 pMainGame->Late_Update();
                 pMainGame->Render();

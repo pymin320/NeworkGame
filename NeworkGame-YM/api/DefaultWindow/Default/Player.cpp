@@ -9,7 +9,6 @@
 #include "SceneMgr.h"
 #include "SoundMgr.h"
 
-
 CPlayer::CPlayer()
 	:m_iColliTime(GetTickCount()), m_iCountColli(GetTickCount())
 {

@@ -3,6 +3,28 @@
 #define SERVERPORT 9000
 #define BUFSIZE    512
 
+void ProcessGameData(SOCKET client_sock, const char* data)
+{
+	// 여기에 클라이언트의 게임 데이터를 처리하는 로직을 추가
+	// 받은 데이터를 파싱하여 필요한 정보를 추출하고 적절한 응답을 생성
+
+	// 예시: 받은 데이터가 "체력:100, 점수:500, 쿠키타입:1" 형식이라면
+	int hp, score, cookieType;
+	if (sscanf_s(data, "체력:%d, 점수:%d, 쿠키타입:%d", &hp, &score, &cookieType) == 3) {
+		// 데이터 처리 로직 추가
+		// 예: 서버 콘솔에 출력
+		printf("[클라이언트 데이터] 체력:%d, 점수:%d, 쿠키타입:%d\n", hp, score, cookieType);
+
+		// 클라이언트에게 응답 보내기
+		char response[BUFSIZE];
+		sprintf_s(response, BUFSIZE, "서버에서 받은 데이터 처리 완료. 체력:%d, 점수:%d, 쿠키타입:%d", hp, score, cookieType);
+		int retval = send(client_sock, response, (int)strlen(response), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("send()");
+		}
+	}
+}
+
 int main(int argc, char* argv[])
 {
 	int retval;
@@ -64,6 +86,8 @@ int main(int argc, char* argv[])
 			// 받은 데이터 출력
 			buf[retval] = '\0';
 			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), buf);
+
+			ProcessGameData(client_sock, buf);
 
 			// 데이터 보내기
 			retval = send(client_sock, buf, retval, 0);
