@@ -61,6 +61,9 @@ int main(int argc, char* argv[])
 			err_display("recv()");
 		}
 
+		buf[retval] = '\0';
+		printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port),buf);
+
 		// 클라이언트와 데이터 통신 (계속 통신해야 하는 부분)
 		while (1) {
 			// 데이터 받기
