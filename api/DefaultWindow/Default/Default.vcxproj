@@ -194,6 +194,7 @@
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
+    <ClInclude Include="Opp.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Pumkin.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
+    <ClCompile Include="Opp.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Pumkin.cpp" />

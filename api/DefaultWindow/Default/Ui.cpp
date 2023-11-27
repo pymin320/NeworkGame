@@ -5,6 +5,8 @@
 #include "ScoreMgr.h"
 #include "ObjMgr.h"
 #include "Player.h"
+#include "Opp.h"
+#include "NetworkManager.h"
 
 
 CUi::CUi()
@@ -33,7 +35,7 @@ void CUi::Initialize(void)
 	
 	m_fPlayerHp = static_cast<CPlayer*>(CObjMgr::Get_Instance()->Get_Obj_List(OBJ_PLAYER).front())->Set_Hp();
 
-
+	m_fOppOriginHp = CNetworkManager::Get_Instance()->Get_OppHp();
 
 	m_tBonus.fX = 150;
 	m_tBonus.fY = 20;
@@ -64,6 +66,8 @@ void CUi::Initialize(void)
 	m_bHighScore = false;
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Heart.bmp", L"Heart");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Heart2.bmp", L"Heart2");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Me.bmp", L"Me");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BonusTime.bmp", L"BonusTime");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/FONT_NUMBER.bmp", L"Font");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Jellies.bmp", L"Jellies");
@@ -80,6 +84,9 @@ void CUi::Initialize(void)
 const int && CUi::Update(void)
 {
 	m_tHP.fCX = static_cast<CPlayer*>(CObjMgr::Get_Instance()->Get_Obj_List(OBJ_PLAYER).front())->Set_Hp();
+
+	//상대 hp
+	m_tOppHP.fCX = CNetworkManager::Get_Instance()->Get_OppHp();
 
 
 	m_iScore = CScoreMgr::Get_Instance()->Get_Score();
@@ -112,6 +119,7 @@ void CUi::Late_Update(void)
 	if (!m_bHp)
 	{
 		m_tInfo.fCX = static_cast<CPlayer*>(CObjMgr::Get_Instance()->Get_Obj_List(OBJ_PLAYER).front())->Set_Hp();
+		m_fOppOriginHp = CNetworkManager::Get_Instance()->Get_OppHp();
 		m_bHp = true;
 	}
 	Update_Rect();
@@ -162,10 +170,12 @@ void CUi::Render(HDC hDC)
 		HDC		hMemDC8 = CBmpMgr::Get_Instance()->Find_Image(L"Jump");
 		HDC		hMemDC9 = CBmpMgr::Get_Instance()->Find_Image(L"Slide");
 		HDC		hMemDC10 = CBmpMgr::Get_Instance()->Find_Image(L"1st");
+		HDC		hMemDC11 = CBmpMgr::Get_Instance()->Find_Image(L"Heart2");
+		HDC		hMemDC12 = CBmpMgr::Get_Instance()->Find_Image(L"Me");
 
-
+		//HPbar
 		GdiTransparentBlt(hDC,
-			int(50),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(70),	// 2,3 인자 :  복사받을 위치 X, Y
 			int(m_tRect.top),
 			int(m_tInfo.fCX),
 			int(m_tInfo.fCY),
@@ -177,7 +187,7 @@ void CUi::Render(HDC hDC)
 			RGB(255, 0, 200));
 
 		GdiTransparentBlt(hDC,
-			int(50),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(70),	// 2,3 인자 :  복사받을 위치 X, Y
 			int(m_tHPrect.top),
 			int(m_tHP.fCX),
 			int(m_tHP.fCY),
@@ -186,6 +196,44 @@ void CUi::Render(HDC hDC)
 			50,
 			(int)m_tHP.fCX,		// 복사할 비트맵의 가로, 세로 길이
 			(int)m_tHP.fCY,
+			RGB(255, 0, 200));
+
+		//OppHp
+		GdiTransparentBlt(hDC,
+			int(70),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top + 45),
+			int(m_fOppOriginHp),
+			int(m_tInfo.fCY),
+			hMemDC11,
+			0,			// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_fOppOriginHp,		// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(255, 0, 200));
+
+		GdiTransparentBlt(hDC,
+			int(70),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tHPrect.top + 45),
+			int(m_tOppHP.fCX),
+			int(m_tHP.fCY),
+			hMemDC11,
+			0,			// 비트맵 출력 시작 좌표, X,Y
+			50,
+			(int)m_tOppHP.fCX,		// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tHP.fCY,
+			RGB(255, 0, 200));
+
+		//me
+		GdiTransparentBlt(hDC,
+			int(10),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top + 10),
+			int(63),
+			int(31),
+			hMemDC12,
+			0,			// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)63,		// 복사할 비트맵의 가로, 세로 길이
+			(int)31,
 			RGB(255, 0, 200));
 
 		// 보너스 타임
@@ -663,7 +711,7 @@ void CUi::Render(HDC hDC)
 
 		GdiTransparentBlt(hDC,
 			50,	// 2,3 인자 :  복사받을 위치 X, Y
-			75,
+			75 + 50,
 			282,
 			42,
 			hMemDC6,
@@ -675,7 +723,7 @@ void CUi::Render(HDC hDC)
 
 		GdiTransparentBlt(hDC,
 			int(50 + m_fPlayerBar),	// 2,3 인자 :  복사받을 위치 X, Y
-			80,
+			80 + 50,
 			24,
 			26,
 			hMemDC7,

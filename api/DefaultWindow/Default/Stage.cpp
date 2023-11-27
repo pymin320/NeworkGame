@@ -21,6 +21,7 @@
 #include "SoundMgr.h"
 #include "Bullet.h"
 #include "Meteor.h"
+#include "Opp.h"
 
 CStage::CStage()
 {
@@ -35,6 +36,7 @@ CStage::~CStage()
 void CStage::Initialize(void)
 {
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<COpp>::Create());
 	CObjMgr::Get_Instance()->Add_Object(OBJ_METEOR, CAbstractFactory<CMeteor>::Create());
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create());
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BACKGROUND, CAbstractFactory<CBackGround>::Create());
