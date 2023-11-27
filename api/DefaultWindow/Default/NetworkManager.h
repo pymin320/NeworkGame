@@ -5,7 +5,7 @@
 #include <ws2tcpip.h> // 윈속2 확장 헤더
 
 #include <stdio.h> // printf(), ...
-
+#include "ScoreMgr.h"
 #pragma comment(lib, "ws2_32") // ws2_32.lib 링크
 class CNetworkManager
 {
@@ -32,10 +32,12 @@ public:
 	bool Get_OppReady() { return m_bOppReady; }
 	void Set_OppReady(bool _bOppReady) { m_bOppReady = _bOppReady; }
 	void Send_OppReady(SOCKET sock, bool data) {
-		int retval;
-		retval = send(sock, (char*)&data, sizeof(bool), 0);
-		if (retval == SOCKET_ERROR) {
-			//err_display("send()");
+		if (!Get_AllReady()) {
+			int retval;
+			retval = send(sock, (char*)&data, sizeof(bool), 0);
+			if (retval == SOCKET_ERROR) {
+				//err_display("send()");
+			}
 		}
 	}
 
@@ -50,6 +52,19 @@ public:
 		}
 		return (bool)data;
 	}
+
+	void Send_PlayerData(SOCKET sock, char data[],size_t datasize) {
+		int retval;
+
+		Set_PlayerData(CScoreMgr::Get_Hp(), CScoreMgr::Get_Coin(), CScoreMgr::Get_Score());
+		retval = send(sock, (char*)&m_splayerdata, sizeof(m_splayerdata), 0);
+		if (retval == SOCKET_ERROR) {
+			//err_display("send()");
+		}
+	}
+	
+
+
 public:
 	static		CNetworkManager*		Get_Instance(void)
 	{
@@ -72,8 +87,19 @@ public:
 
 private:
 	static CNetworkManager*			m_pInstance;
+	void Set_PlayerData(int _hp, int _coin, int _score) {
+		m_splayerdata.hp = _hp;
+		m_splayerdata.coin = _coin;
+		m_splayerdata.score = _score;
+	}
 
 private:
+	struct m_sPlayerData {
+		int hp, coin, score;
+	};
+	m_sPlayerData m_splayerdata;
+
+
 	float m_fOppHp;			//상대 hp
 	int m_iOppType;			//상대 쿠키 타입
 	int m_iOppState;		//상대 상태(점프인가 뛰는건가)

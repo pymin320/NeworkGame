@@ -8,6 +8,7 @@
 CPlayer player1; //player1
 CPlayer player2; //player2
 
+
 int main(int argc, char* argv[])
 {
 	int retval;
@@ -39,7 +40,7 @@ int main(int argc, char* argv[])
 	struct sockaddr_in clientaddr;
 	int addrlen;
 	char buf[BUFSIZE + 1];
-
+	bool boolValue = false;
 	while (1) {
 		// accept()
 		addrlen = sizeof(clientaddr);
@@ -63,30 +64,30 @@ int main(int argc, char* argv[])
 
 		buf[retval] = '\0';
 		printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port),buf);
-
+		
+		memset(buf, 0, sizeof(buf));
 		// 클라이언트와 데이터 통신 (계속 통신해야 하는 부분)
 		while (1) {
-			// 데이터 받기
-			retval = recv(client_sock, buf, sizeof(bool), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("recv()");
-				break;
+			if (!boolValue) {
+				// 데이터 받기
+				retval = recv(client_sock, buf, sizeof(bool), 0);
+				if (retval == SOCKET_ERROR) {
+					err_display("recv()");
+					break;
+				}
+				else if (retval == 0)
+					break;
+
+				// buf에 저장된 bool 값 변환
+				boolValue = buf[0] != '0'; // '0'이 아니면 true, '0'이면 false
+				// bool 값을 문자열로 변환하여 출력
+				printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
+				if (boolValue) {
+					player1.Set_PlayerReady(true);			//쓰레드 두개로 만들시 구분해서 넣을 항목
+					player2.Set_PlayerReady(true);			//미래 수정사항
+				}//임의로 만들어 둠
 			}
-			else if (retval == 0)
-				break;
 
-			// buf에 저장된 bool 값 변환
-			bool boolValue = buf[0] != '0'; // '0'이 아니면 true, '0'이면 false
-
-			// bool 값을 문자열로 변환하여 출력
-			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
-
-			if (bool(buf)) {
-				 player1.Set_PlayerReady(true);
-				 player2.Set_PlayerReady(true);			//미래 수정사항
-			}//쓰레드 두개로 만들시 구분해서 넣을 항목
-			//임의로 만들어 둠
-			
 			if (player1.Get_PlayerReady() && player2.Get_PlayerReady()) {
 				CNetworkManager::Get_Instance()->Set_AllReady(true);
 			}
@@ -98,6 +99,20 @@ int main(int argc, char* argv[])
 				err_display("send()");
 				break;
 			}
+
+			//임의로 클라1에 저장
+			memset(buf, 0, sizeof(buf));
+			
+			// 데이터 받기
+			retval = recv(client_sock, reinterpret_cast<char*>(&player1.m_splayerdata), sizeof(player1.m_splayerdata), 0);
+			if (retval == SOCKET_ERROR) {
+				err_display("recv()");
+				break;
+			}
+			else if (retval == 0)
+				break;
+			player1.Set_PlayerData();
+			printf("체력: %d, 코인: %d, 점수: %d\n",player1.Get_Hp(), player1.Get_Coin(), player1.Get_Score());
 		}
 
 		// 소켓 닫기
