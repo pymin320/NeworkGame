@@ -166,6 +166,9 @@
     <Filter Include="01. Obj\00. Player\Bullet\METEOR">
       <UniqueIdentifier>{82e6ea77-959a-4348-9c12-41263665dfa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NetworkManager">
+      <UniqueIdentifier>{56e84e08-7ad8-4adb-bf08-75f6ed9a4667}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -372,6 +375,9 @@
     <ClInclude Include="Common.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="NetworkManager.h">
+      <Filter>NetworkManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -541,6 +547,9 @@
     </ClCompile>
     <ClCompile Include="Meteor.cpp">
       <Filter>01. Obj\00. Player\Bullet\METEOR</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>NetworkManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
