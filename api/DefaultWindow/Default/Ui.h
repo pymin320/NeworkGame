@@ -28,6 +28,11 @@ private:
 	INFO		m_tHP;
 	RECT		m_tHPrect;
 
+	float		m_fOppHp;
+	float		m_fOppOriginHp;
+	INFO		m_tOppHP;
+	RECT		m_tOppHPrect;
+
 	INFO		m_tBonus;
 	RECT		m_tBonusRect;
 

@@ -9,7 +9,6 @@
 #include "BackGround.h"
 #include "Scenemgr.h"
 #include "SoundMgr.h"
-
 float g_fSound = 1.f;
 
 
