@@ -190,6 +190,7 @@
     <ClInclude Include="MyBmp.h" />
     <ClInclude Include="Needle.h" />
     <ClInclude Include="NeedleMgr.h" />
+    <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
     <ClInclude Include="Pet.h" />
@@ -252,6 +253,7 @@
     <ClCompile Include="MyBmp.cpp" />
     <ClCompile Include="Needle.cpp" />
     <ClCompile Include="NeedleMgr.cpp" />
+    <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="Pet.cpp" />

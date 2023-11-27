@@ -5,6 +5,7 @@
 #include "ScoreMgr.h"
 #include "ObjMgr.h"
 #include "SoundMgr.h"
+#include "NetworkManager.h"
 
 CRobby::CRobby()
 {
@@ -345,6 +346,7 @@ void CRobby::Render(HDC hDC)
 			RGB(0, 255, 255));
 		if (GetAsyncKeyState(VK_LBUTTON))
 		{
+			CNetworkManager::Get_Instance()->Set_OppReady(true);
 			CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
 			return;
 		}
