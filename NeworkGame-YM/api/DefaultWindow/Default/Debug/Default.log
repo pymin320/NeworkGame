@@ -1,4 +1,0 @@
-﻿  Default.cpp
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Default.cpp(24,34): warning C4477: 'sprintf_s' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'double'입니다.
-C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Default\Default.cpp(72,9): warning C4101: 'len' :참조되지 않은 지역 변수입니다.
-  Default.vcxproj -> C:\Users\pc\OneDrive\바탕 화면\NeworkGame\NeworkGame-YM\api\DefaultWindow\Debug\WINAPI.exe
