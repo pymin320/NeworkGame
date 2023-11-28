@@ -17,6 +17,9 @@ public:
 	float Get_OppHp() { return m_fOppHp; }
 	void Set_OppHp(float _fOppHp) { m_fOppHp = _fOppHp; }
 
+	float Get_PlayerHp() { return m_fPlayerHp; }
+	void Set_PlayerHp(float _fPlayerHp) { m_fPlayerHp = _fPlayerHp; }
+
 	int Get_OppType() { return m_iOppType; }
 	void Set_OppType(int _fOppType) { m_iOppType = _fOppType; }
 
@@ -56,7 +59,7 @@ public:
 	void Send_PlayerData(SOCKET sock, char data[],size_t datasize) {
 		int retval;
 
-		Set_PlayerData(CScoreMgr::Get_Hp(), CScoreMgr::Get_Coin(), CScoreMgr::Get_Score());
+		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score());
 		retval = send(sock, (char*)&m_splayerdata, sizeof(m_splayerdata), 0);
 		if (retval == SOCKET_ERROR) {
 			//err_display("send()");
@@ -101,6 +104,7 @@ private:
 
 
 	float m_fOppHp;			//상대 hp
+	float m_fPlayerHp;		//내 hp
 	int m_iOppType;			//상대 쿠키 타입
 	int m_iOppState;		//상대 상태(점프인가 뛰는건가)
 	float m_fOppPosx;		//상대 위치x
