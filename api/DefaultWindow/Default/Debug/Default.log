@@ -1,4 +1,5 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(Default.vcxproj, WINPI.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+<<<<<<< Updated upstream
   stdafx.cpp
   Air.cpp
 C:\Users\ym\Desktop\새 폴더 (4)\NGP\api\DefaultWindow\Default\Air.cpp(61,15): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
@@ -136,3 +137,73 @@ C:\Users\ym\Desktop\새 폴더 (4)\NGP\api\DefaultWindow\Default\Small.cpp(33): 
 C:\Users\ym\Desktop\새 폴더 (4)\NGP\api\DefaultWindow\Default\Small.cpp(36): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
 C:\Users\ym\Desktop\새 폴더 (4)\NGP\api\DefaultWindow\Default\Pumkin.cpp(42): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
   Default.vcxproj -> C:\Users\ym\Desktop\새 폴더 (4)\NGP\api\DefaultWindow\Debug\WINAPI.exe
+=======
+  Default.cpp
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(94,25): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(97,28): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Default.cpp(53,9): warning C4101: 'len' :참조되지 않은 지역 변수입니다.
+  NetworkManager.cpp
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(94,25): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(97,28): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Opp.cpp
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(94,25): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(97,28): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(196,18): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(243,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(271,27): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(293,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(325,31): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(370,55): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(415,27): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(415,67): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(419,32): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(419,73): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(424,32): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(441,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(456,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(471,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(495,24): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(539,29): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(613,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(917,28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Player.cpp
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(94,25): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(97,28): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(190,18): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(237,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(247,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(259,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(285,27): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(307,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(339,31): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(384,55): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(429,27): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(429,67): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(433,32): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(433,73): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(438,32): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(455,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(470,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(485,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(509,24): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(553,29): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(627,30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(931,28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Robby.cpp
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(94,25): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(97,28): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Robby.cpp(141,26): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Robby.cpp(187,30): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Robby.cpp(635,7): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Robby.cpp(630,7): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Ui.cpp
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(94,25): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(97,28): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Ui.cpp(114): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(614): warning C4715: 'CPlayer::Set_State': 모든 제어 경로에서 값을 반환하지는 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Player.cpp(517): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(600): warning C4715: 'COpp::Set_State': 모든 제어 경로에서 값을 반환하지는 않습니다.
+C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Default\Opp.cpp(503): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+  Default.vcxproj -> C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Debug\WINAPI.exe
+>>>>>>> Stashed changes

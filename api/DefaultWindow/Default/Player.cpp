@@ -8,6 +8,7 @@
 #include "ScoreMgr.h"
 #include "SceneMgr.h"
 #include "SoundMgr.h"
+#include "NetworkManager.h"
 
 
 CPlayer::CPlayer()
@@ -170,6 +171,7 @@ void CPlayer::Initialize(void)
 
 const int&& CPlayer::Update(void)
 {
+	CNetworkManager::Get_Instance()->Set_PlayerHp(m_fHp);
 	Key_Input();
 	Jumping();
 	OffSet();
