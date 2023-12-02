@@ -11,7 +11,6 @@ public:
 	bool Get_AllReady() { return m_bAllReady; };
 	void Set_AllReady(bool _bAllReady) { m_bAllReady = _bAllReady; }
 
-
 public:
 	static		CNetworkManager* Get_Instance(void)
 	{

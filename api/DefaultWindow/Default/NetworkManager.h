@@ -32,6 +32,12 @@ public:
 	float Get_OppPosy() { return m_fOppPosy; }
 	void Set_OppPosy(float _fOppPosy) { m_fOppPosy = _fOppPosy; }
 
+	int Get_OppCoin() { return m_iOppCoin; }
+	void Set_OppCoin(int _iOppCOin) { m_iOppCoin = _iOppCOin; }
+
+	int Get_OppScore() { return m_iOppScore; }
+	void Set_OppScore(int _iOppScore) { m_iOppScore = _iOppScore; }
+
 	bool Get_OppReady() { return m_bOppReady; }
 	void Set_OppReady(bool _bOppReady) { m_bOppReady = _bOppReady; }
 	void Send_OppReady(SOCKET sock, bool data) {
@@ -56,7 +62,7 @@ public:
 		return (bool)data[0];
 	}
 
-	void Send_PlayerData(SOCKET sock, char data[],size_t datasize) {
+	void Send_PlayerData(SOCKET sock, char data[]) {
 		int retval;
 
 		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score());
@@ -65,7 +71,18 @@ public:
 			//err_display("send()");
 		}
 	}
-	
+
+	void Recv_OppPlayerData(SOCKET sock, char data[]) {
+		int retval;
+
+		retval = recv(sock, (char*)&m_sOppplayerdata, sizeof(m_sOppplayerdata), 0);
+		if (retval == SOCKET_ERROR) {
+			//err_display("send()");
+		}
+		Set_OppHp(m_sOppplayerdata.hp);
+		Set_OppCoin(m_sOppplayerdata.coin);
+		Set_OppScore(m_sOppplayerdata.score);
+	}
 
 
 public:
@@ -101,6 +118,7 @@ private:
 		int hp, coin, score;
 	};
 	m_sPlayerData m_splayerdata;
+	m_sPlayerData m_sOppplayerdata;
 
 
 	float m_fOppHp;			//상대 hp
@@ -109,7 +127,8 @@ private:
 	int m_iOppState;		//상대 상태(점프인가 뛰는건가)
 	float m_fOppPosx;		//상대 위치x
 	float m_fOppPosy;		//상대 위치y
+	int m_iOppCoin;			//상대 코인
+	int m_iOppScore;		//상대 점수
 	bool m_bOppReady = false;		//상대 준비상태
 	bool m_bAllReady = false;		//상대,본인 준비 상태
 };
-
