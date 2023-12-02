@@ -1,8 +1,6 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(510,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(Default.vcxproj, WINPI.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
-  Robby.cpp
-C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(62,18): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\Robby.cpp(141,26): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\Robby.cpp(187,30): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\Robby.cpp(634,7): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\Robby.cpp(629,7): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Default.cpp
+C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(68,18): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\NetworkManager.h(82,29): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Default\Default.cpp(54,9): warning C4101: 'len' :참조되지 않은 지역 변수입니다.
   Default.vcxproj -> C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Debug\WINAPI.exe

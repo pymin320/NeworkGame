@@ -5,6 +5,7 @@
 #include "Default.h"
 #include "MainGame.h"
 #include "NetworkManager.h"
+#include "SceneMgr.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 #define SERVERPORT 9000
@@ -126,9 +127,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     CNetworkManager::Get_Instance()->Send_OppReady(sock, CNetworkManager::Get_Instance()->Get_OppReady());
                     if (CNetworkManager::Get_Instance()->Recv_AllReady(sock, buf)) {
                         CNetworkManager::Get_Instance()->Set_AllReady(true);
-                        CNetworkManager::Get_Instance()->Send_PlayerData(sock, buf,BUFSIZE);
                     }
                 }
+                if (CNetworkManager::Get_Instance()->Get_AllReady()) {
+                    CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
+                    CNetworkManager::Get_Instance()->Send_PlayerData(sock, buf);
+                    CNetworkManager::Get_Instance()->Recv_OppPlayerData(sock, buf);
+                }
+
                 dwOldTime = GetTickCount();
             }
         }
