@@ -344,10 +344,8 @@ void CRobby::Render(HDC hDC)
 			292,			// 복사할 비트맵의 가로, 세로 길이
 			79,
 			RGB(0, 255, 255));
-		if (GetAsyncKeyState(VK_LBUTTON))
-		{
+		if (GetAsyncKeyState(VK_LBUTTON)){
 			CNetworkManager::Get_Instance()->Set_OppReady(true);
-
 			if (CNetworkManager::Get_Instance()->Get_AllReady()) {
 				CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
 			}

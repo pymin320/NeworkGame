@@ -14,6 +14,8 @@ public:
 	virtual ~CPlayer();
 
 public:
+	int Get_ClientNum() { return m_iClientNum; };
+	void Set_ClientNum(int _ClientNum) { m_iClientNum = _ClientNum; };
 	bool Get_PlayerReady() { return m_bClientReady; };
 	void Set_PlayerReady(bool _bClientReady) { m_bClientReady = _bClientReady; };
 	int Get_Hp() { return m_iHp; };

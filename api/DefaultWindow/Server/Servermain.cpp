@@ -5,13 +5,177 @@
 #define SERVERPORT 9000
 #define BUFSIZE    512
 
-CPlayer player1; //player1
-CPlayer player2; //player2
+using namespace std;
 
+CPlayer* player1 = new CPlayer();
+CPlayer* player2 =new CPlayer();
+
+DWORD WINAPI ProcessClient1(LPVOID arg)
+{
+	int retval;
+	SOCKET client_sock = (SOCKET)arg;
+	struct sockaddr_in clientaddr;
+	char addr[INET_ADDRSTRLEN];
+	int addrlen;
+	char buf[BUFSIZE + 1];
+
+	bool boolValue = false;
+
+	// 클라이언트 정보 얻기
+	addrlen = sizeof(clientaddr);
+	getpeername(client_sock, (struct sockaddr*)&clientaddr, &addrlen);
+	inet_ntop(AF_INET, &clientaddr.sin_addr, addr, sizeof(addr));
+
+	//게임 시작 받기
+	retval = recv(client_sock, buf, BUFSIZE, 0);
+	if (retval == SOCKET_ERROR) {
+		err_display("recv()");
+	}
+
+	buf[retval] = '\0';
+	printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port),buf);
+	
+	memset(buf, 0, sizeof(buf));
+
+	while (1) {
+		if (!boolValue) {
+			// 데이터 받기
+			retval = recv(client_sock, buf, sizeof(bool), 0);
+			if (retval == SOCKET_ERROR) {
+				err_display("recv()");
+				break;
+			}
+			else if (retval == 0)
+				break;
+
+			// buf에 저장된 bool 값 변환
+			boolValue = buf[0] != '0'; // '0'이 아니면 true, '0'이면 false
+			// bool 값을 문자열로 변환하여 출력
+			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
+			if (boolValue)
+				player1->Set_PlayerReady(true);	
+		}
+
+		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
+			CNetworkManager::Get_Instance()->Set_AllReady(true);
+		}
+
+		// 데이터 보내기
+		buf[0] = static_cast<char>(CNetworkManager::Get_Instance()->Get_AllReady());
+		retval = send(client_sock, &buf[0], sizeof(bool), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("send()");
+			break;
+		}
+
+		//임의로 클라1에 저장
+		memset(buf, 0, sizeof(buf));
+
+		// 데이터 받기
+		retval = recv(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("recv()");
+			break;
+		}
+		else if (retval == 0)
+			break;
+		player1->Set_PlayerData();
+		
+		if(player1->Get_Hp()>=0)
+			printf("체력: %d, 코인: %d, 점수: %d\n", player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score());
+	}
+	// 소켓 닫기
+	closesocket(client_sock);
+	printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트 번호=%d\n",
+		addr, ntohs(clientaddr.sin_port));
+
+	return 0;
+}
+
+DWORD WINAPI ProcessClient2(LPVOID arg)
+{
+	int retval;
+	SOCKET client_sock = (SOCKET)arg;
+	struct sockaddr_in clientaddr;
+	char addr[INET_ADDRSTRLEN];
+	int addrlen;
+	char buf[BUFSIZE + 1];
+	bool boolValue = false;
+
+	// 클라이언트 정보 얻기
+	addrlen = sizeof(clientaddr);
+	getpeername(client_sock, (struct sockaddr*)&clientaddr, &addrlen);
+	inet_ntop(AF_INET, &clientaddr.sin_addr, addr, sizeof(addr));
+
+	retval = recv(client_sock, buf, BUFSIZE, 0);
+	if (retval == SOCKET_ERROR) {
+		err_display("recv()");
+	}
+
+	buf[retval] = '\0';
+	printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), buf);
+
+	memset(buf, 0, sizeof(buf));
+	while (1) {
+		if (!boolValue) {
+			// 데이터 받기
+			retval = recv(client_sock, buf, sizeof(bool), 0);
+			if (retval == SOCKET_ERROR) {
+				err_display("recv()");
+				break;
+			}
+			else if (retval == 0)
+				break;
+
+			// buf에 저장된 bool 값 변환
+			boolValue = buf[0] != '0'; // '0'이 아니면 true, '0'이면 false
+			// bool 값을 문자열로 변환하여 출력
+			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
+			if (boolValue) 
+				player2->Set_PlayerReady(true);	
+		}
+
+		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
+			CNetworkManager::Get_Instance()->Set_AllReady(true);
+		}
+
+		// 데이터 보내기
+		buf[0] = static_cast<char>(CNetworkManager::Get_Instance()->Get_AllReady());
+		retval = send(client_sock, &buf[0], sizeof(bool), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("send()");
+			break;
+		}
+
+		//임의로 클라1에 저장
+		memset(buf, 0, sizeof(buf));
+
+		// 데이터 받기
+		retval = recv(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("recv()");
+			break;
+		}
+		else if (retval == 0)
+			break;
+		player2->Set_PlayerData();
+		
+		if (player2->Get_Hp() >= 0)
+			printf("체력: %d, 코인: %d, 점수: %d\n", player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score());
+	}
+
+	// 소켓 닫기
+	closesocket(client_sock);
+	printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트 번호=%d\n",
+		addr, ntohs(clientaddr.sin_port));
+
+	return 0;
+}
 
 int main(int argc, char* argv[])
 {
 	int retval;
+	int ClientNum{};
 
 	// 윈속 초기화
 	WSADATA wsa;
@@ -38,9 +202,13 @@ int main(int argc, char* argv[])
 	// 데이터 통신에 사용할 변수
 	SOCKET client_sock;
 	struct sockaddr_in clientaddr;
+
 	int addrlen;
 	char buf[BUFSIZE + 1];
 	bool boolValue = false;
+	HANDLE ClientThread1;
+	HANDLE ClientThread2;
+
 	while (1) {
 		// accept()
 		addrlen = sizeof(clientaddr);
@@ -55,76 +223,32 @@ int main(int argc, char* argv[])
 		inet_ntop(AF_INET, &clientaddr.sin_addr, addr, sizeof(addr));
 		printf("\n[TCP 서버] 클라이언트 접속: IP 주소=%s, 포트 번호=%d\n",
 			addr, ntohs(clientaddr.sin_port));
-		
-		//게임 시작 받기
-		retval = recv(client_sock, buf, BUFSIZE, 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("recv()");
+
+		++ClientNum;
+		if (1 == ClientNum) {
+			//player1 = new CPlayer();
+			player1->Set_ClientNum(ClientNum);
+			ClientThread1 = CreateThread(NULL, 0, ProcessClient1,
+				(LPVOID)client_sock, 0, NULL);
+			if (ClientThread1 == NULL) { closesocket(client_sock); }
+			else { CloseHandle(ClientThread1); }
 		}
-
-		buf[retval] = '\0';
-		printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port),buf);
-		
-		memset(buf, 0, sizeof(buf));
-		// 클라이언트와 데이터 통신 (계속 통신해야 하는 부분)
-		while (1) {
-			if (!boolValue) {
-				// 데이터 받기
-				retval = recv(client_sock, buf, sizeof(bool), 0);
-				if (retval == SOCKET_ERROR) {
-					err_display("recv()");
-					break;
-				}
-				else if (retval == 0)
-					break;
-
-				// buf에 저장된 bool 값 변환
-				boolValue = buf[0] != '0'; // '0'이 아니면 true, '0'이면 false
-				// bool 값을 문자열로 변환하여 출력
-				printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
-				if (boolValue) {
-					player1.Set_PlayerReady(true);			//쓰레드 두개로 만들시 구분해서 넣을 항목
-					player2.Set_PlayerReady(true);			//미래 수정사항
-				}//임의로 만들어 둠
-			}
-
-			if (player1.Get_PlayerReady() && player2.Get_PlayerReady()) {
-				CNetworkManager::Get_Instance()->Set_AllReady(true);
-			}
-
-			// 데이터 보내기
-			buf[0] = static_cast<char>(CNetworkManager::Get_Instance()->Get_AllReady());
-			retval = send(client_sock, &buf[0], sizeof(bool), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("send()");
-				break;
-			}
-
-			//임의로 클라1에 저장
-			memset(buf, 0, sizeof(buf));
-			
-			// 데이터 받기
-			retval = recv(client_sock, reinterpret_cast<char*>(&player1.m_splayerdata), sizeof(player1.m_splayerdata), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("recv()");
-				break;
-			}
-			else if (retval == 0)
-				break;
-			player1.Set_PlayerData();
-			printf("체력: %d, 코인: %d, 점수: %d\n",player1.Get_Hp(), player1.Get_Coin(), player1.Get_Score());
+		else if (2 == ClientNum) {
+			//player2 = 
+			player2->Set_ClientNum(ClientNum);
+			ClientThread2 = CreateThread(NULL, 0, ProcessClient2,
+				(LPVOID)client_sock, 0, NULL);
+			if (ClientThread2 == NULL) { closesocket(client_sock); }
+			else { CloseHandle(ClientThread2); }
 		}
-
-		// 소켓 닫기
-		closesocket(client_sock);
-		printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트 번호=%d\n",
-			addr, ntohs(clientaddr.sin_port));
 	}
-
 	// 소켓 닫기
 	closesocket(listen_sock);
 
+	delete player1;
+	delete player2;
 	// 윈속 종료
 	WSACleanup();
 	return 0;
+
 }

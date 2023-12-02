@@ -48,12 +48,12 @@ public:
 	void Set_AllReady(bool _bAllReady) { m_bAllReady = _bAllReady; }
 	bool Recv_AllReady(SOCKET sock, char data[]) {
 		int retval;
-		retval = recv(sock, (char*)&data, sizeof(bool), 0);
+		retval = recv(sock, data, sizeof(bool), 0);
 		if (retval == SOCKET_ERROR) {
 			//err_display("recv()");
 			return false;
 		}
-		return (bool)data;
+		return (bool)data[0];
 	}
 
 	void Send_PlayerData(SOCKET sock, char data[],size_t datasize) {
