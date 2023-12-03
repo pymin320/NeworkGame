@@ -79,6 +79,32 @@ public:
 		return m_fHp;
 	}
 
+	static float Get_Posx()
+	{
+		return m_fPosx;
+	}
+
+	static float Set_Posx(const float& _Posx)
+	{
+		m_fPosx += _Posx;
+	}
+
+	static float Get_Posy()
+	{
+		return m_fPosy;
+	}
+
+	static float Set_Posy(const float& _Posy)
+	{
+		m_fPosy += _Posy;
+	}
+
+	static void Reset_Pos()
+	{
+		m_fPosx = 0;
+		m_fPosy = 0;
+	}
+
 	static int Get_JellyType()
 	{
 		return m_iJellyType;
@@ -125,6 +151,8 @@ private:
 	static int m_iScore;
 	static int m_iCoin;
 	static float m_fHp;
+	static float m_fPosx;
+	static float m_fPosy;
 	static int m_iJellyType;
 	static int m_iCookieType;
 	static int m_iHighScore;

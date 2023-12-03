@@ -20,6 +20,9 @@ public:
 	float Get_PlayerHp() { return m_fPlayerHp; }
 	void Set_PlayerHp(float _fPlayerHp) { m_fPlayerHp = _fPlayerHp; }
 
+	float Get_PlayerPosx() { return m_fPlayerPosx; }
+	void Set_PlayerPosx(float _fPlayerPosx) { m_fPlayerPosx = _fPlayerPosx; }
+
 	int Get_OppType() { return m_iOppType; }
 	void Set_OppType(int _fOppType) { m_iOppType = _fOppType; }
 
@@ -65,7 +68,7 @@ public:
 	void Send_PlayerData(SOCKET sock, char data[]) {
 		int retval;
 
-		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score());
+		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score(), m_fPlayerPosx, m_fPlayerPosy);
 		retval = send(sock, (char*)&m_splayerdata, sizeof(m_splayerdata), 0);
 		if (retval == SOCKET_ERROR) {
 			//err_display("send()");
@@ -107,15 +110,17 @@ public:
 
 private:
 	static CNetworkManager*			m_pInstance;
-	void Set_PlayerData(int _hp, int _coin, int _score) {
+	void Set_PlayerData(int _hp, int _coin, int _score, int _posx, int _posy) {
 		m_splayerdata.hp = _hp;
 		m_splayerdata.coin = _coin;
 		m_splayerdata.score = _score;
+		m_splayerdata.posx = _posx;
+		m_splayerdata.posy = _posy;
 	}
 
 private:
 	struct m_sPlayerData {
-		int hp, coin, score;
+		int hp, coin, score, posx, posy;
 	};
 	m_sPlayerData m_splayerdata;
 	m_sPlayerData m_sOppplayerdata;
@@ -127,6 +132,8 @@ private:
 	int m_iOppState;		//상대 상태(점프인가 뛰는건가)
 	float m_fOppPosx;		//상대 위치x
 	float m_fOppPosy;		//상대 위치y
+	float m_fPlayerPosx;	//내 위치x
+	float m_fPlayerPosy;	//내 위치y
 	int m_iOppCoin;			//상대 코인
 	int m_iOppScore;		//상대 점수
 	bool m_bOppReady = false;		//상대 준비상태

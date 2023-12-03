@@ -96,7 +96,8 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 
 			player1->Set_PlayerData();
 			if (player1->Get_Hp() >= 0)
-				printf("[클라1] 체력: %d, 코인: %d, 점수: %d\n", player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score());
+				printf("[클라1] 체력: %d, 코인: %d, 점수: %d, Posx: %d, Posy: %d\n", 
+					player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), player1->Get_Posx(), player1->Get_Posy());
 
 			//상대 데이터 전송
 			retval = SendData(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata));
@@ -174,7 +175,8 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 
 			player2->Set_PlayerData();
 			if (player2->Get_Hp() >= 0)
-				printf("[클라2] 체력: %d, 코인: %d, 점수: %d\n", player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score());
+				printf("[클라2] 체력: %d, 코인: %d, 점수: %d, Posx: %d, Posy: %d\n", 
+					player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), player2->Get_Posx(), player2->Get_Posy());
 
 			//상대 데이터 전송
 			retval = SendData(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata));
