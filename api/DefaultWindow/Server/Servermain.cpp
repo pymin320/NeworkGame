@@ -1,5 +1,3 @@
-#include "Common.h"
-#include "NetworkManager.h"
 #include "Player.h"
 
 #define SERVERPORT 9000
@@ -29,7 +27,7 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 	//게임 시작 받기
 	retval = recv(client_sock, buf, BUFSIZE, 0);
 	if (retval == SOCKET_ERROR) {
-		err_display("recv()");
+		//err_display("recv()");
 	}
 
 	buf[retval] = '\0';
@@ -40,39 +38,25 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 	while (1) {
 		if (!boolValue) {
 			// 데이터 받기
-			retval = recv(client_sock, buf, sizeof(bool), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("recv()");
-				break;
-			}
-			else if (retval == 0)
-				break;
+			boolValue = player1->Recv_ReadyData(client_sock);
 
-			// buf에 저장된 bool 값 변환
-			boolValue = buf[0] != '0'; // '0'이 아니면 true, '0'이면 false
-			// bool 값을 문자열로 변환하여 출력
 			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
+			printf("쿠키타입: %d\n", player1->Get_CookieType());
 			if (boolValue)
 				player1->Set_PlayerReady(true);
 		}
 
 		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
 			CNetworkManager::Get_Instance()->Set_AllReady(true);
-			// 데이터 보내기
-			buf[0] = static_cast<char>(CNetworkManager::Get_Instance()->Get_AllReady());
-			retval = send(client_sock, &buf[0], sizeof(bool), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("send()");
-				break;
-			}
-
+			
+			player1->Send_ReadyData(client_sock, *player2);
 			//임의로 클라1에 저장
 			memset(buf, 0, sizeof(buf));
 
 			// 데이터 받기
 			retval = recv(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata), 0);
 			if (retval == SOCKET_ERROR) {
-				err_display("recv()");
+				//err_display("recv()");
 				break;
 			}
 			else if (retval == 0)
@@ -80,12 +64,13 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 
 			player1->Set_PlayerData();
 			if (player1->Get_Hp() >= 0)
-				printf("[클라1] 체력: %d, 코인: %d, 점수: %d\n", player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score());
+				printf("[클라1] 체력: %d, 코인: %d, 점수: %d, 위치X값: %f, 위치Y값: %f\n",
+					player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), player1->Get_Posx(),player1->Get_Posy());
 
 			//상대 데이터 전송
 			retval = send(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata), 0);
 			if (retval == SOCKET_ERROR) {
-				err_display("send()");
+				//err_display("send()");
 				break;
 			}
 			else if (retval == 0)
@@ -117,7 +102,7 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 
 	retval = recv(client_sock, buf, BUFSIZE, 0);
 	if (retval == SOCKET_ERROR) {
-		err_display("recv()");
+		//err_display("recv()");
 	}
 
 	buf[retval] = '\0';
@@ -127,18 +112,10 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 	while (1) {
 		if (!boolValue) {
 			// 데이터 받기
-			retval = recv(client_sock, buf, sizeof(bool), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("recv()");
-				break;
-			}
-			else if (retval == 0)
-				break;
-
-			// buf에 저장된 bool 값 변환
-			boolValue = buf[0] != '0'; // '0'이 아니면 true, '0'이면 false
-			// bool 값을 문자열로 변환하여 출력
+			boolValue = player2->Recv_ReadyData(client_sock);
+			
 			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
+			printf("쿠키타입: %d\n", player2->Get_CookieType());
 			if (boolValue)
 				player2->Set_PlayerReady(true);
 		}
@@ -146,14 +123,7 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
 			CNetworkManager::Get_Instance()->Set_AllReady(true);
 
-
-			// 데이터 보내기
-			buf[0] = static_cast<char>(CNetworkManager::Get_Instance()->Get_AllReady());
-			retval = send(client_sock, &buf[0], sizeof(bool), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("send()");
-				break;
-			}
+			player2->Send_ReadyData(client_sock, *player1);
 
 			//임의로 클라1에 저장
 			memset(buf, 0, sizeof(buf));
@@ -161,7 +131,7 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 			// 데이터 받기
 			retval = recv(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata), 0);
 			if (retval == SOCKET_ERROR) {
-				err_display("recv()");
+				//err_display("recv()");
 				break;
 			}
 			else if (retval == 0)
@@ -169,12 +139,13 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 
 			player2->Set_PlayerData();
 			if (player2->Get_Hp() >= 0)
-				printf("[클라2] 체력: %d, 코인: %d, 점수: %d\n", player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score());
+				printf("[클라2] 체력: %d, 코인: %d, 점수: %d, 위치X값: %f, 위치Y값: %f\n",
+					player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), player2->Get_Posx(), player2->Get_Posy());
 
 			//상대 데이터 전송
 			retval = send(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata), 0);
 			if (retval == SOCKET_ERROR) {
-				err_display("send()");
+				//err_display("send()");
 				break;
 			}
 			else if (retval == 0)
@@ -201,7 +172,7 @@ int main(int argc, char* argv[])
 
 	// 소켓 생성
 	SOCKET listen_sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (listen_sock == INVALID_SOCKET) err_quit("socket()");
+	//if (listen_sock == INVALID_SOCKET); //err_quit("socket()");
 
 	// bind()
 	struct sockaddr_in serveraddr;
@@ -210,11 +181,11 @@ int main(int argc, char* argv[])
 	serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	serveraddr.sin_port = htons(SERVERPORT);
 	retval = bind(listen_sock, (struct sockaddr*)&serveraddr, sizeof(serveraddr));
-	if (retval == SOCKET_ERROR) err_quit("bind()");
+	//if (retval == SOCKET_ERROR) //err_quit("bind()");
 
 	// listen()
 	retval = listen(listen_sock, SOMAXCONN);
-	if (retval == SOCKET_ERROR) err_quit("listen()");
+	//if (retval == SOCKET_ERROR) err_quit("listen()");
 
 	// 데이터 통신에 사용할 변수
 	SOCKET client_sock;
@@ -231,8 +202,8 @@ int main(int argc, char* argv[])
 		addrlen = sizeof(clientaddr);
 		client_sock = accept(listen_sock, (struct sockaddr*)&clientaddr, &addrlen);
 		if (client_sock == INVALID_SOCKET) {
-			err_display("accept()");
-			break;
+			//err_display("accept()");
+			//break;
 		}
 
 		// 접속한 클라이언트 정보 출력

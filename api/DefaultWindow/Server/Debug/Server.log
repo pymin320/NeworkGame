@@ -1,3 +1,3 @@
 ﻿  Servermain.cpp
-C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Server\Servermain.cpp(224,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
-  Server.vcxproj -> C:\Users\USER\Desktop\공부\3학년 2학기\넷겜플\NeworkGame\api\DefaultWindow\Debug\Server.exe
+C:\Users\sec\Desktop\넷겜플_git\NeworkGame\api\DefaultWindow\Server\Servermain.cpp(195,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+  Server.vcxproj -> C:\Users\sec\Desktop\넷겜플_git\NeworkGame\api\DefaultWindow\Debug\Server.exe
