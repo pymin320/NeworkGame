@@ -19,6 +19,7 @@ public:
 	float		Set_Hp() { return m_fHp; }
 	int			Get_Playertype() { return m_iPlayertype; }
 	int			Get_Cookietype() { return m_eCurState; }
+	int			Set_Cookietype(int _iCookieType) { m_iCookieType = _iCookieType; }
 	void		Get_PlayerHp(float _Hp) { m_fHp = _Hp; }
 	float		Get_PlayerPosx() { return m_tInfo.fX; }
 	float		Get_PlayerPosy() { return m_tInfo.fY; }

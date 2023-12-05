@@ -197,7 +197,8 @@ void CRobby::Late_Update(void)
 
 	if (GetAsyncKeyState('P'))
 	{
-		CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
+		CNetworkManager::Get_Instance()->Set_OppReady(true);
+		//CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
 		return;
 	}
 
