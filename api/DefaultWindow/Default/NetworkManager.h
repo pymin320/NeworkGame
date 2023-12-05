@@ -24,6 +24,9 @@ public:
 	int Get_OppType() { return m_iOppType; }
 	void Set_OppType(int _fOppType) { m_iOppType = _fOppType; }
 
+	int Get_PlayerState() { return m_iPlayerState; }
+	void Set_PlayerState(int _iPlayerState) { m_iPlayerState = _iPlayerState; }
+
 	int Get_OppState() { return m_iOppState; }
 	void Set_OppState(int _fOppState) { m_iOppState = _fOppState; }
 
@@ -76,7 +79,7 @@ public:
 	void Send_PlayerData(SOCKET sock, char data[]) {
 		int retval;
 
-		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score(), m_fPlayerPosx, m_fPlayerPosy );
+		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score(), m_fPlayerPosx, m_fPlayerPosy ,m_iPlayerState);
 		retval = send(sock, (char*)&m_splayerdata, sizeof(m_splayerdata), 0);
 		if (retval == SOCKET_ERROR) {
 			//err_display("send()");
@@ -95,6 +98,7 @@ public:
 		Set_OppScore(m_sOppplayerdata.score);
 		Set_OppPosx(m_sOppplayerdata.posX);
 		Set_OppPosy(m_sOppplayerdata.posY);
+		Set_OppState(m_sOppplayerdata.state);
 	}
 
 
@@ -120,12 +124,13 @@ public:
 
 private:
 	static CNetworkManager*			m_pInstance;
-	void Set_PlayerData(int _hp, int _coin, int _score, float _posX, float _posY) {
+	void Set_PlayerData(int _hp, int _coin, int _score, float _posX, float _posY, int _state) {
 		m_splayerdata.hp = _hp;
 		m_splayerdata.coin = _coin;
 		m_splayerdata.score = _score;
 		m_splayerdata.posX = _posX;
 		m_splayerdata.posY = _posY;
+		m_splayerdata.state = _state;
 	}
 	void Set_ReadyData(int _cookietype, bool _ready) {
 		m_sreadydata.cookietype = _cookietype;
@@ -135,8 +140,9 @@ private:
 private:
 	struct m_sPlayerData {
 		float posX, posY;
-		int hp, coin, score;
+		int hp, coin, score, state;
 	};
+	//enum STATE { IDLE, WALK, JUMP, DOUBLEJUMP, SLIDE, DEAD, BOOST, GIGA, DEVIL, REVIVE, WITCH, STATE_END };
 	struct m_sReadyData {
 		int cookietype;
 		bool ready;
@@ -149,6 +155,7 @@ private:
 	float m_fOppHp;			//상대 hp
 	float m_fPlayerHp;		//내 hp
 	int m_iOppType;			//상대 쿠키 타입
+	int m_iPlayerState;		//내 상태
 	int m_iOppState;		//상대 상태(점프인가 뛰는건가)
 	float m_fPlayerPosx;	//내 위치x
 	float m_fPlayerPosy;	//내 위치y

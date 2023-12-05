@@ -134,7 +134,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
                     CNetworkManager::Get_Instance()->Send_PlayerData(sock, buf);
                     CNetworkManager::Get_Instance()->Recv_OppPlayerData(sock, buf);
-                   CNetworkManager::Get_Instance()->Set_OppType((CNetworkManager::Get_Instance()->Get_OppType()));
+                    CNetworkManager::Get_Instance()->Set_OppType((CNetworkManager::Get_Instance()->Get_OppType()));
                 }
 
                 dwOldTime = GetTickCount();
