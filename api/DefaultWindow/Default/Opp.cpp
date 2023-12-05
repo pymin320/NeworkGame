@@ -119,10 +119,9 @@ void COpp::Initialize(void)
 
 	m_iEnd2 = 0;
 
-	m_iCookieType = CScoreMgr::Get_Instance()->Get_CookieType();
+	m_iCookieType = CNetworkManager::Get_Instance()->Get_OppType();
 
 	//쿠키 타입 test용 고정
-	m_iCookieType = ZOMBIECOOKIE;
 
 	if (m_iCookieType == COFFEECOOKIE)
 	{

@@ -100,7 +100,6 @@ void CRobby::Initialize(void)
 	CScoreMgr::Get_Instance()->Reset_Score();
 	CScoreMgr::Get_Instance()->Reset_Coin();
 	CScoreMgr::Get_Instance()->Reset_Hp();
-	CScoreMgr::Get_Instance()->Reset_Pos();
 
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/bg_lobby.bmp", L"bg_lobby");
@@ -198,7 +197,8 @@ void CRobby::Late_Update(void)
 
 	if (GetAsyncKeyState('P'))
 	{
-		CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
+		CNetworkManager::Get_Instance()->Set_OppReady(true);
+		//CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
 		return;
 	}
 

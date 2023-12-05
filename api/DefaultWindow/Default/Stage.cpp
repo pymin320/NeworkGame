@@ -54,8 +54,6 @@ void CStage::Initialize(void)
 	CScrollMgr::Get_Instance()->Reset_Scroll();
 
 	static_cast<CPlayer*>(OBJMGR->Get_Player())->Get_PlayerHp(CScoreMgr::Get_Instance()->Get_Hp());
-	static_cast<CPlayer*>(OBJMGR->Get_Player())->Get_PlayerPosx();
-	static_cast<CPlayer*>(OBJMGR->Get_Player())->Get_PlayerPosy();
 
 	CUiMgr::Get_Instance()->Initialize();
 

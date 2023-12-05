@@ -44,6 +44,15 @@ private:
 	INFO		m_tCoin;
 	RECT		m_tCoinRect;
 
+
+	INFO		m_tOppScore;
+	RECT		m_tOppScoreRect;
+	int			m_iOppScore;
+
+	int			m_iOppCoin;
+	INFO		m_tOppCoin;
+	RECT		m_tOppCoinRect;
+
 	INFO		m_tJump;
 	RECT		m_tJumpRect;
 

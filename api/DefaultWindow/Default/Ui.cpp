@@ -137,14 +137,26 @@ void CUi::Late_Update(void)
 	m_tBonusRect.bottom = LONG(m_tBonus.fY + (m_tBonus.fCY * 0.5f));
 
 	m_tScoreRect.left = LONG(m_tScore.fX - (m_tScore.fCX * 0.5f));
-	m_tScoreRect.top = LONG(m_tScore.fY - (m_tScore.fCY * 0.5f));
+	m_tScoreRect.top = LONG(m_tScore.fY - (m_tScore.fCY * 0.5f)) - 40.f;
 	m_tScoreRect.right = LONG(m_tScore.fX + (m_tScore.fCX * 0.5f));
 	m_tScoreRect.bottom = LONG(m_tScore.fY + (m_tScore.fCY * 0.5f));
 
 	m_tCoinRect.left = LONG(m_tCoin.fX - (m_tCoin.fCX * 0.5f));
-	m_tCoinRect.top = LONG(m_tCoin.fY - (m_tCoin.fCY * 0.5f));
+	m_tCoinRect.top = LONG(m_tCoin.fY - (m_tCoin.fCY * 0.5f)) - 40.f;
 	m_tCoinRect.right = LONG(m_tCoin.fX + (m_tCoin.fCX * 0.5f));
 	m_tCoinRect.bottom = LONG(m_tCoin.fY + (m_tCoin.fCY * 0.5f));
+
+	// 상대 코인, 점수 포지션
+	m_tOppScoreRect.left = LONG(m_tScore.fX - (m_tScore.fCX * 0.5f));
+	m_tOppScoreRect.top = LONG(m_tScore.fY - (m_tScore.fCY * 0.5f)) + 10.f;
+	m_tOppScoreRect.right = LONG(m_tScore.fX + (m_tScore.fCX * 0.5f));
+	m_tOppScoreRect.bottom = LONG(m_tScore.fY + (m_tScore.fCY * 0.5f));
+
+	m_tOppCoinRect.left = LONG(m_tCoin.fX - (m_tCoin.fCX * 0.5f));
+	m_tOppCoinRect.top = LONG(m_tCoin.fY - (m_tCoin.fCY * 0.5f)) + 10.f;
+	m_tOppCoinRect.right = LONG(m_tCoin.fX + (m_tCoin.fCX * 0.5f));
+	m_tOppCoinRect.bottom = LONG(m_tCoin.fY + (m_tCoin.fCY * 0.5f));
+
 
 	m_tJumpRect.left = LONG(m_tJump.fX - (m_tJump.fCX * 0.5f));
 	m_tJumpRect.top = LONG(m_tJump.fY - (m_tJump.fCY * 0.5f));
@@ -527,7 +539,7 @@ void CUi::Render(HDC hDC)
 
 		GdiTransparentBlt(hDC,
 			340,	// 2,3 인자 :  복사받을 위치 X, Y
-			75,
+			35,
 			40,
 			int(m_tInfo.fCY),
 			hMemDC4,
@@ -683,7 +695,7 @@ void CUi::Render(HDC hDC)
 
 		GdiTransparentBlt(hDC,		//코인
 			560,	// 2,3 인자 :  복사받을 위치 X, Y
-			75,
+			35,
 			49,
 			54,
 			hMemDC5,
@@ -692,6 +704,456 @@ void CUi::Render(HDC hDC)
 			49,		// 복사할 비트맵의 가로, 세로 길이
 			54,
 			RGB(255, 0, 200));
+
+
+
+		// 상대 점수, 코인
+		if (m_iScore <= 9)
+		{
+			GdiTransparentBlt(hDC,
+				int(m_tOppScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * m_iScore),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+		}
+
+		else if (m_iScore >= 10 && 100 > m_iScore)
+		{
+			{
+				GdiTransparentBlt(hDC,
+					int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppScoreRect.top),
+					int(m_tScore.fCX),
+					int(m_tScore.fCY),
+					hMemDC3,
+					int(m_tScore.fCX * (m_iScore / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tScoreRect.left + 25),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppScoreRect.top),
+					int(m_tScore.fCX),
+					int(m_tScore.fCY),
+					hMemDC3,
+					int(m_tScore.fCX * (m_iScore % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+			}
+		}
+		else if (m_iScore >= 100 && 1000 > m_iScore)
+		{
+			{
+				GdiTransparentBlt(hDC,
+					int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppScoreRect.top),
+					int(m_tScore.fCX),
+					int(m_tScore.fCY),
+					hMemDC3,
+					int(m_tScore.fCX * (m_iScore / 100)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tScoreRect.left + 25),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppScoreRect.top),
+					int(m_tScore.fCX),
+					int(m_tScore.fCY),
+					hMemDC3,
+					int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tScoreRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppScoreRect.top),
+					int(m_tScore.fCX),
+					int(m_tScore.fCY),
+					hMemDC3,
+					int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+			}
+		}
+
+		else if (m_iScore >= 1000 && 10000 > m_iScore)
+		{
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * (m_iScore / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 25),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 75),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+		}
+
+		else if (m_iScore >= 10000 && 100000 > m_iScore)
+		{
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * (m_iScore / 10000)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 25),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 10000) / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 75),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 100),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+		}
+
+		else if (m_iScore >= 100000 && 1000000 > m_iScore)
+		{
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * (m_iScore / 100000)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 25),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 100000) / 10000)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 10000) / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 75),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 100),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+
+			GdiTransparentBlt(hDC,
+				int(m_tScoreRect.left + 125),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppScoreRect.top),
+				int(m_tScore.fCX),
+				int(m_tScore.fCY),
+				hMemDC3,
+				int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tScore.fCY,
+				RGB(255, 0, 200));
+		}
+
+
+
+
+		GdiTransparentBlt(hDC,
+			340,	// 2,3 인자 :  복사받을 위치 X, Y
+			85,
+			40,
+			int(m_tInfo.fCY),
+			hMemDC4,
+			0,			// 비트맵 출력 시작 좌표, X,Y
+			1691,
+			(int)40,		// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(255, 0, 200));
+
+
+
+
+
+		// 코인
+		if (m_iCoin <= 9)
+		{
+			GdiTransparentBlt(hDC,
+				int(m_tCoinRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tOppCoinRect.top),
+				int(m_tCoin.fCX),
+				int(m_tCoin.fCY),
+				hMemDC3,
+				int(m_tCoin.fCX * m_iCoin),			// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tCoin.fCY,
+				RGB(255, 0, 200));
+		}
+		else if (m_iCoin >= 10 && 100 > m_iCoin)
+		{
+			{
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 75),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tCoin.fCY,
+					RGB(255, 0, 200));
+			}
+		}
+
+		else if (m_iCoin >= 100 && m_iCoin < 1000)
+		{
+			{
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin / 100)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 75),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin % 100 / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tCoin.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 100),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tCoin.fCY,
+					RGB(255, 0, 200));
+			}
+		}
+
+		else if (m_iCoin >= 1000 && m_iCoin < 10000)
+		{
+			{
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 25),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tScore.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin % 1000 / 100)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tCoin.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 75),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin % 100 / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tCoin.fCY,
+					RGB(255, 0, 200));
+
+				GdiTransparentBlt(hDC,
+					int(m_tCoinRect.left + 100),	// 2,3 인자 :  복사받을 위치 X, Y
+					int(m_tOppCoinRect.top),
+					int(m_tCoin.fCX),
+					int(m_tCoin.fCY),
+					hMemDC3,
+					int(m_tCoin.fCX * (m_iCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					0,
+					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
+					(int)m_tCoin.fCY,
+					RGB(255, 0, 200));
+			}
+		}
+
+
+
+		GdiTransparentBlt(hDC,		//코인
+			560,	// 2,3 인자 :  복사받을 위치 X, Y
+			85,
+			49,
+			54,
+			hMemDC5,
+			0,		// 비트맵 출력 시작 좌표, X,Y
+			0,
+			49,		// 복사할 비트맵의 가로, 세로 길이
+			54,
+			RGB(255, 0, 200));
+
+
+
 
 		// 1st
 		if (m_bHighScore)

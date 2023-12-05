@@ -118,7 +118,10 @@ void CPlayer::Initialize(void)
 	m_iEnd2 = 0;
 
 	CNetworkManager::Get_Instance()->Set_PlayerHp(m_fHp);
-
+	CNetworkManager::Get_Instance()->Set_PlayerPosx(m_tInfo.fX);
+	CNetworkManager::Get_Instance()->Set_PlayerPosy(m_tInfo.fY);
+	CNetworkManager::Get_Instance()->Set_PlayerState(m_eCurState);
+	//수정 121.122.123
 	m_iCookieType = CScoreMgr::Get_Instance()->Get_CookieType();
 
 	if (m_iCookieType == COFFEECOOKIE)
@@ -174,6 +177,10 @@ void CPlayer::Initialize(void)
 const int&& CPlayer::Update(void)
 {
 	CNetworkManager::Get_Instance()->Set_PlayerHp(m_fHp);
+	CNetworkManager::Get_Instance()->Set_PlayerPosx(m_tInfo.fX);
+	CNetworkManager::Get_Instance()->Set_PlayerPosy(m_tInfo.fY);
+	CNetworkManager::Get_Instance()->Set_PlayerState(m_eCurState);
+	//수정
 
 	Key_Input();
 	Jumping();
