@@ -36,6 +36,9 @@ public:
 	float Get_PlayerPosy() { return m_fPlayerPosy; }
 	void Set_PlayerPosy(float _fPlayerPosy) { m_fPlayerPosy = _fPlayerPosy; }
 
+	bool Get_PlayerCollide() { return m_bPlayerCollide; }
+	void Set_PlayerCollide(bool _bPlayerCollide) { m_bPlayerCollide = _bPlayerCollide; }
+
 	float Get_OppPosx() { return m_fOppPosx; }
 	void Set_OppPosx(float _fOppPosx) { m_fOppPosx = _fOppPosx; }
 
@@ -79,7 +82,7 @@ public:
 	void Send_PlayerData(SOCKET sock, char data[]) {
 		int retval;
 
-		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score(), m_fPlayerPosx, m_fPlayerPosy ,m_iPlayerState);
+		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score(), m_fPlayerPosx, m_fPlayerPosy ,m_iPlayerState, m_bPlayerCollide);
 		retval = send(sock, (char*)&m_splayerdata, sizeof(m_splayerdata), 0);
 		if (retval == SOCKET_ERROR) {
 			//err_display("send()");
@@ -124,13 +127,14 @@ public:
 
 private:
 	static CNetworkManager*			m_pInstance;
-	void Set_PlayerData(int _hp, int _coin, int _score, float _posX, float _posY, int _state) {
+	void Set_PlayerData(int _hp, int _coin, int _score, float _posX, float _posY, int _state, bool _collide) {
 		m_splayerdata.hp = _hp;
 		m_splayerdata.coin = _coin;
 		m_splayerdata.score = _score;
 		m_splayerdata.posX = _posX;
 		m_splayerdata.posY = _posY;
 		m_splayerdata.state = _state;
+		m_splayerdata.collide = _collide;
 	}
 	void Set_ReadyData(int _cookietype, bool _ready) {
 		m_sreadydata.cookietype = _cookietype;
@@ -141,6 +145,7 @@ private:
 	struct m_sPlayerData {
 		float posX, posY;
 		int hp, coin, score, state;
+		bool collide;
 	};
 	//enum STATE { IDLE, WALK, JUMP, DOUBLEJUMP, SLIDE, DEAD, BOOST, GIGA, DEVIL, REVIVE, WITCH, STATE_END };
 	struct m_sReadyData {
@@ -152,17 +157,19 @@ private:
 	m_sReadyData m_sreadydata;
 	m_sReadyData m_sOppreadydata;
 
-	float m_fOppHp;			//상대 hp
-	float m_fPlayerHp;		//내 hp
-	int m_iOppType;			//상대 쿠키 타입
-	int m_iPlayerState;		//내 상태
-	int m_iOppState;		//상대 상태(점프인가 뛰는건가)
-	float m_fPlayerPosx;	//내 위치x
-	float m_fPlayerPosy;	//내 위치y
-	float m_fOppPosx;		//상대 위치x
-	float m_fOppPosy;		//상대 위치y
-	int m_iOppCoin;			//상대 코인
-	int m_iOppScore;		//상대 점수
+	float m_fOppHp;					//상대 hp
+	float m_fPlayerHp;				//내 hp
+	int m_iOppType;					//상대 쿠키 타입
+	int m_iPlayerState;				//내 상태
+	int m_iOppState;				//상대 상태(점프인가 뛰는건가)
+	float m_fPlayerPosx;			//내 위치x
+	float m_fPlayerPosy;			//내 위치y
+	bool m_bPlayerCollide = false;	//충돌 체크
+
+	float m_fOppPosx;				//상대 위치x
+	float m_fOppPosy;				//상대 위치y
+	int m_iOppCoin;					//상대 코인
+	int m_iOppScore;				//상대 점수
 	bool m_bOppReady = false;		//상대 준비상태
 	bool m_bAllReady = false;		//상대,본인 준비 상태
 };
