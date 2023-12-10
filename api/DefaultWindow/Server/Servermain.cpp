@@ -5,8 +5,14 @@
 
 using namespace std;
 
+HANDLE hEvent1, hEvent2;
+CRITICAL_SECTION cs;
+
 CPlayer* player1 = new CPlayer();
 CPlayer* player2 = new CPlayer();
+
+int check1, check2;
+bool playerturn = true;
 
 DWORD WINAPI ProcessClient1(LPVOID arg)
 {
@@ -42,13 +48,22 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 
 			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
 			printf("쿠키타입: %d\n", player1->Get_CookieType());
-			if (boolValue)
+			if (boolValue) {
+				EnterCriticalSection(&cs);
 				player1->Set_PlayerReady(true);
+				playerturn = false;
+				LeaveCriticalSection(&cs);
+			}
+		}
+
+		EnterCriticalSection(&cs);
+		if (!playerturn) {
+			LeaveCriticalSection(&cs);
+			continue;
 		}
 
 		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
 			CNetworkManager::Get_Instance()->Set_AllReady(true);
-			
 			player1->Send_ReadyData(client_sock, *player2);
 			//임의로 클라1에 저장
 			memset(buf, 0, sizeof(buf));
@@ -63,10 +78,11 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 				break;
 
 			player1->Set_PlayerData();
-			if (player1->Get_Hp() >= 0)
-				printf("[클라1] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
-					player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), player1->Get_State(),player1->Get_Posx(),player1->Get_Posy());
-
+			if (player1->Get_Hp() >= 0) {
+				++check1;
+				printf("[클라1 - %d] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
+					check1, player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), player1->Get_State(), player1->Get_Posx(), player1->Get_Posy());
+			}
 			//상대 데이터 전송
 			retval = send(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata), 0);
 			if (retval == SOCKET_ERROR) {
@@ -75,13 +91,17 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 			}
 			else if (retval == 0)
 				break;
+			EnterCriticalSection(&cs);
+			playerturn = false;
+			LeaveCriticalSection(&cs);
 		}
+		LeaveCriticalSection(&cs);
 	}
 	// 소켓 닫기
 	closesocket(client_sock);
 	printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트 번호=%d\n",
 		addr, ntohs(clientaddr.sin_port));
-
+	
 	return 0;
 }
 
@@ -113,14 +133,25 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 		if (!boolValue) {
 			// 데이터 받기
 			boolValue = player2->Recv_ReadyData(client_sock);
-			
+
 			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
 			printf("쿠키타입: %d\n", player2->Get_CookieType());
-			if (boolValue)
+			if (boolValue) {
+				EnterCriticalSection(&cs);
 				player2->Set_PlayerReady(true);
+				playerturn = true; 
+				LeaveCriticalSection(&cs); 
+			}
+		}
+
+		EnterCriticalSection(&cs);
+		if (playerturn) {
+			LeaveCriticalSection(&cs);
+			continue; 
 		}
 
 		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
+
 			CNetworkManager::Get_Instance()->Set_AllReady(true);
 
 			player2->Send_ReadyData(client_sock, *player1);
@@ -138,10 +169,11 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 				break;
 
 			player2->Set_PlayerData();
-			if (player2->Get_Hp() >= 0)
-				printf("[클라2] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
-					player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), player2->Get_State(), player2->Get_Posx(), player2->Get_Posy());
-
+			if (player2->Get_Hp() >= 0) {
+				++check2;
+				printf("[클라2 - %d] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
+					check2, player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), player2->Get_State(), player2->Get_Posx(), player2->Get_Posy());
+			}
 			//상대 데이터 전송
 			retval = send(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata), 0);
 			if (retval == SOCKET_ERROR) {
@@ -150,7 +182,11 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 			}
 			else if (retval == 0)
 				break;
+			EnterCriticalSection(&cs); // 임계 영역 진입
+			playerturn = true; // 플레이어 1의 차례로 변경
+			LeaveCriticalSection(&cs); // 임계 영역 빠져나옴
 		}
+		LeaveCriticalSection(&cs); // 임계 영역 빠져나옴
 	}
 	// 소켓 닫기
 	closesocket(client_sock);
@@ -164,6 +200,8 @@ int main(int argc, char* argv[])
 {
 	int retval;
 	int ClientNum{};
+
+	InitializeCriticalSection(&cs);
 
 	// 윈속 초기화
 	WSADATA wsa;
@@ -186,7 +224,7 @@ int main(int argc, char* argv[])
 	// listen()
 	retval = listen(listen_sock, SOMAXCONN);
 	//if (retval == SOCKET_ERROR) err_quit("listen()");
-
+	
 	// 데이터 통신에 사용할 변수
 	SOCKET client_sock;
 	struct sockaddr_in clientaddr;
@@ -194,8 +232,8 @@ int main(int argc, char* argv[])
 	int addrlen;
 	char buf[BUFSIZE + 1];
 	bool boolValue = false;
-	HANDLE ClientThread1;
-	HANDLE ClientThread2;
+	HANDLE ClientThread1 = NULL;
+	HANDLE ClientThread2 = NULL;
 
 	while (1) {
 		// accept()
@@ -219,7 +257,9 @@ int main(int argc, char* argv[])
 			ClientThread1 = CreateThread(NULL, 0, ProcessClient1,
 				(LPVOID)client_sock, 0, NULL);
 			if (ClientThread1 == NULL) { closesocket(client_sock); }
-			else { CloseHandle(ClientThread1); }
+			else {
+				CloseHandle(ClientThread1);
+			}
 		}
 		else if (2 == ClientNum) {
 			//player2 = 
@@ -227,7 +267,9 @@ int main(int argc, char* argv[])
 			ClientThread2 = CreateThread(NULL, 0, ProcessClient2,
 				(LPVOID)client_sock, 0, NULL);
 			if (ClientThread2 == NULL) { closesocket(client_sock); }
-			else { CloseHandle(ClientThread2); }
+			else {
+				CloseHandle(ClientThread2); 
+			}
 		}
 	}
 	// 소켓 닫기
@@ -235,6 +277,9 @@ int main(int argc, char* argv[])
 
 	delete player1;
 	delete player2;
+
+
+	DeleteCriticalSection(&cs);
 	// 윈속 종료
 	WSACleanup();
 	return 0;

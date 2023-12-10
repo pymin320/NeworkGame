@@ -29,14 +29,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_ LPWSTR    lpCmdLine,
     _In_ int       nCmdShow)
 {
-    int argc{};
-    LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    //int argc{};
+    //LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argc);
 
-    if (argc < 2) {
-        // 인수가 충분하지 않을 때의 처리
-        MessageBox(NULL, L"Error!", L"Error", MB_OK);
-        return 0;
-    }
+    //if (argc < 2) {
+    //    // 인수가 충분하지 않을 때의 처리
+    //    MessageBox(NULL, L"Error!", L"Error", MB_OK);
+    //    return 0;
+    //}
 
     int retval;
 
@@ -49,8 +49,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
     //if (sock == INVALID_SOCKET) err_quit("socket()");
 
-    char SERVERIP[256];
-    WideCharToMultiByte(CP_UTF8, 0, argv[1], -1, SERVERIP, sizeof(SERVERIP), NULL, NULL);
+    char* SERVERIP = "127.0.0.1";
+    //WideCharToMultiByte(CP_UTF8, 0, argv[1], -1, SERVERIP, sizeof(SERVERIP), NULL, NULL);
     
     // connect()
     struct sockaddr_in serveraddr;
@@ -61,7 +61,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     retval = connect(sock, (struct sockaddr*)&serveraddr, sizeof(serveraddr));
    // if (retval == SOCKET_ERROR) err_quit("connect()");
 
-    LocalFree(argv);
+  /*  LocalFree(argv);*/
 
     // 데이터 통신에 사용할 변수
     char buf[BUFSIZE + 1];

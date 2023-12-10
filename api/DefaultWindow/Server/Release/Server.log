@@ -1,9 +1,7 @@
-﻿  NetworkManager.cpp
-  Player.cpp
-  Servermain.cpp
-C:\Users\sec\Desktop\넷겜플_git\NeworkGame\api\DefaultWindow\Server\Servermain.cpp(195,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+﻿  Servermain.cpp
+C:\Users\sec\Desktop\넷겜플_git\NeworkGame\api\DefaultWindow\Server\Servermain.cpp(233,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
   코드를 생성하고 있습니다.
-  Previous IPDB not found, fall back to full compilation.
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
   All 32 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   코드를 생성했습니다.
   Server.vcxproj -> C:\Users\sec\Desktop\넷겜플_git\NeworkGame\api\DefaultWindow\Release\Server.exe

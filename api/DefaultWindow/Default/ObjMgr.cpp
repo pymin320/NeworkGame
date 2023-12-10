@@ -83,7 +83,7 @@ int CObjMgr::Update(void)
 	CDevilCoinMgr::Get_Instance()->Update();
 	CGoldMgr::Get_Instance()->Update();
 	CPumkinMgr::Get_Instance()->Update();
-	CAirMgr::Get_Instance()->Update();
+	//CAirMgr::Get_Instance()->Update();
 	CFrogMgr::Get_Instance()->Update();
 
 
