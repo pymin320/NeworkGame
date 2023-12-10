@@ -78,8 +78,8 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 				break;
 
 			player1->Set_PlayerData();
+			++check1;
 			if (player1->Get_Hp() >= 0) {
-				++check1;
 				printf("[클라1 - %d] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
 					check1, player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), player1->Get_State(), player1->Get_Posx(), player1->Get_Posy());
 			}
@@ -169,8 +169,8 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 				break;
 
 			player2->Set_PlayerData();
+			++check2;
 			if (player2->Get_Hp() >= 0) {
-				++check2;
 				printf("[클라2 - %d] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
 					check2, player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), player2->Get_State(), player2->Get_Posx(), player2->Get_Posy());
 			}
