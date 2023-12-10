@@ -90,6 +90,7 @@ const int && CUi::Update(void)
 
 
 	m_iScore = CScoreMgr::Get_Instance()->Get_Score();
+	m_iOppScore = CNetworkManager::Get_Instance()->Get_OppScore();
 
 	if (CScoreMgr::Get_Instance()->Set_HighScore(m_iScore))
 	{
@@ -122,9 +123,13 @@ void CUi::Late_Update(void)
 		m_fOppOriginHp = CNetworkManager::Get_Instance()->Get_OppHp();
 		m_bHp = true;
 	}
+
+	//m_fOppOriginHp = CNetworkManager::Get_Instance()->Get_OppHp();
+
 	Update_Rect();
 
 	m_iCoin = CScoreMgr::Get_Instance()->Get_Coin();
+	m_iOppCoin = CNetworkManager::Get_Instance()->Get_OppCoin();
 
 	m_tHPrect.left = LONG(m_tHP.fX - (m_tHP.fCX * 0.5f));
 	m_tHPrect.top = LONG(m_tHP.fY - (m_tHP.fCY * 0.5f));
@@ -708,7 +713,7 @@ void CUi::Render(HDC hDC)
 
 
 		// 상대 점수, 코인
-		if (m_iScore <= 9)
+		if (m_iOppScore <= 9)
 		{
 			GdiTransparentBlt(hDC,
 				int(m_tOppScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -716,14 +721,14 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * m_iScore),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * m_iOppScore),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
 				RGB(255, 0, 200));
 		}
 
-		else if (m_iScore >= 10 && 100 > m_iScore)
+		else if (m_iOppScore >= 10 && 100 > m_iOppScore)
 		{
 			{
 				GdiTransparentBlt(hDC,
@@ -732,7 +737,7 @@ void CUi::Render(HDC hDC)
 					int(m_tScore.fCX),
 					int(m_tScore.fCY),
 					hMemDC3,
-					int(m_tScore.fCX * (m_iScore / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tScore.fCX * (m_iOppScore / 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
@@ -744,14 +749,14 @@ void CUi::Render(HDC hDC)
 					int(m_tScore.fCX),
 					int(m_tScore.fCY),
 					hMemDC3,
-					int(m_tScore.fCX * (m_iScore % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tScore.fCX * (m_iOppScore % 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
 					RGB(255, 0, 200));
 			}
 		}
-		else if (m_iScore >= 100 && 1000 > m_iScore)
+		else if (m_iOppScore >= 100 && 1000 > m_iOppScore)
 		{
 			{
 				GdiTransparentBlt(hDC,
@@ -760,7 +765,7 @@ void CUi::Render(HDC hDC)
 					int(m_tScore.fCX),
 					int(m_tScore.fCY),
 					hMemDC3,
-					int(m_tScore.fCX * (m_iScore / 100)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tScore.fCX * (m_iOppScore / 100)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
@@ -772,7 +777,7 @@ void CUi::Render(HDC hDC)
 					int(m_tScore.fCX),
 					int(m_tScore.fCY),
 					hMemDC3,
-					int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tScore.fCX * ((m_iOppScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
@@ -784,7 +789,7 @@ void CUi::Render(HDC hDC)
 					int(m_tScore.fCX),
 					int(m_tScore.fCY),
 					hMemDC3,
-					int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tScore.fCX * ((m_iOppScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
@@ -792,7 +797,7 @@ void CUi::Render(HDC hDC)
 			}
 		}
 
-		else if (m_iScore >= 1000 && 10000 > m_iScore)
+		else if (m_iOppScore >= 1000 && 10000 > m_iOppScore)
 		{
 			GdiTransparentBlt(hDC,
 				int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -800,7 +805,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * (m_iScore / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * (m_iOppScore / 1000)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -812,7 +817,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -824,7 +829,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -836,14 +841,14 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
 				RGB(255, 0, 200));
 		}
 
-		else if (m_iScore >= 10000 && 100000 > m_iScore)
+		else if (m_iOppScore >= 10000 && 100000 > m_iOppScore)
 		{
 			GdiTransparentBlt(hDC,
 				int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -851,7 +856,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * (m_iScore / 10000)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * (m_iOppScore / 10000)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -863,7 +868,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 10000) / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 10000) / 1000)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -875,7 +880,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -887,7 +892,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -899,14 +904,14 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
 				RGB(255, 0, 200));
 		}
 
-		else if (m_iScore >= 100000 && 1000000 > m_iScore)
+		else if (m_iOppScore >= 100000 && 1000000 > m_iOppScore)
 		{
 			GdiTransparentBlt(hDC,
 				int(m_tScoreRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -914,7 +919,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * (m_iScore / 100000)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * (m_iOppScore / 100000)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -926,7 +931,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 100000) / 10000)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 100000) / 10000)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -938,7 +943,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 10000) / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 10000) / 1000)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -950,7 +955,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 1000) / 100)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -962,7 +967,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 100) / 10)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -974,7 +979,7 @@ void CUi::Render(HDC hDC)
 				int(m_tScore.fCX),
 				int(m_tScore.fCY),
 				hMemDC3,
-				int(m_tScore.fCX * ((m_iScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tScore.fCX * ((m_iOppScore % 100) % 10)),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tScore.fCY,
@@ -1001,7 +1006,7 @@ void CUi::Render(HDC hDC)
 
 
 		// 코인
-		if (m_iCoin <= 9)
+		if (m_iOppCoin <= 9)
 		{
 			GdiTransparentBlt(hDC,
 				int(m_tCoinRect.left + 50),	// 2,3 인자 :  복사받을 위치 X, Y
@@ -1009,13 +1014,13 @@ void CUi::Render(HDC hDC)
 				int(m_tCoin.fCX),
 				int(m_tCoin.fCY),
 				hMemDC3,
-				int(m_tCoin.fCX * m_iCoin),			// 비트맵 출력 시작 좌표, X,Y
+				int(m_tCoin.fCX * m_iOppCoin),			// 비트맵 출력 시작 좌표, X,Y
 				0,
 				(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
 				(int)m_tCoin.fCY,
 				RGB(255, 0, 200));
 		}
-		else if (m_iCoin >= 10 && 100 > m_iCoin)
+		else if (m_iOppCoin >= 10 && 100 > m_iOppCoin)
 		{
 			{
 				GdiTransparentBlt(hDC,
@@ -1024,7 +1029,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin / 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
@@ -1036,7 +1041,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tCoin.fCY,
@@ -1044,7 +1049,7 @@ void CUi::Render(HDC hDC)
 			}
 		}
 
-		else if (m_iCoin >= 100 && m_iCoin < 1000)
+		else if (m_iOppCoin >= 100 && m_iOppCoin < 1000)
 		{
 			{
 				GdiTransparentBlt(hDC,
@@ -1053,7 +1058,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin / 100)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin / 100)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
@@ -1065,7 +1070,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin % 100 / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin % 100 / 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tCoin.fCY,
@@ -1077,7 +1082,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tCoin.fCY,
@@ -1085,7 +1090,7 @@ void CUi::Render(HDC hDC)
 			}
 		}
 
-		else if (m_iCoin >= 1000 && m_iCoin < 10000)
+		else if (m_iOppCoin >= 1000 && m_iOppCoin < 10000)
 		{
 			{
 				GdiTransparentBlt(hDC,
@@ -1094,7 +1099,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin / 1000)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin / 1000)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tScore.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tScore.fCY,
@@ -1106,7 +1111,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin % 1000 / 100)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin % 1000 / 100)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tCoin.fCY,
@@ -1118,7 +1123,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin % 100 / 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin % 100 / 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tCoin.fCY,
@@ -1130,7 +1135,7 @@ void CUi::Render(HDC hDC)
 					int(m_tCoin.fCX),
 					int(m_tCoin.fCY),
 					hMemDC3,
-					int(m_tCoin.fCX * (m_iCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
+					int(m_tCoin.fCX * (m_iOppCoin % 10)),			// 비트맵 출력 시작 좌표, X,Y
 					0,
 					(int)m_tCoin.fCX,		// 복사할 비트맵의 가로, 세로 길이
 					(int)m_tCoin.fCY,

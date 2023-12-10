@@ -47,7 +47,7 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 			boolValue = player1->Recv_ReadyData(client_sock);
 
 			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
-			printf("쿠키타입: %d\n", player1->Get_CookieType());
+			printf("쿠키타입: %d, 최대체력: %d\n", player1->Get_CookieType(), player1->Get_MaxHp());
 			if (boolValue) {
 				EnterCriticalSection(&cs);
 				player1->Set_PlayerReady(true);
@@ -135,7 +135,7 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 			boolValue = player2->Recv_ReadyData(client_sock);
 
 			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
-			printf("쿠키타입: %d\n", player2->Get_CookieType());
+			printf("쿠키타입: %d, 최대체력: %d\n", player2->Get_CookieType(), player2->Get_MaxHp());
 			if (boolValue) {
 				EnterCriticalSection(&cs);
 				player2->Set_PlayerReady(true);

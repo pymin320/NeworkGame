@@ -7,9 +7,9 @@ private:
 	struct m_sPlayerData {
 		float posX, posY;
 		int hp, coin, score, state;
-	};
+	};  
 	struct m_sReadyData {
-		int cookietype;
+		int cookietype, maxhp;
 		bool ready;
 	};
 public:
@@ -33,6 +33,9 @@ public:
 	int Get_Hp() { return m_iHp; };
 	void Set_Hp(int _iHp) { m_iHp = _iHp; };
 	
+	int Get_MaxHp() { return m_iMaxHp; };
+	void Set_MaxHp(int _iMaxHp) { m_iMaxHp = _iMaxHp; };
+
 	int Get_Coin() { return m_iCoin; };
 	void Set_Coin(int _iCoin) { m_iCoin = _iCoin; };
 	
@@ -60,7 +63,7 @@ public:
 
 	void Send_ReadyData(SOCKET sock, CPlayer& _player){
 		int retval;
-		Set_OppReadyData(_player.Get_CookieType(), CNetworkManager::Get_Instance()->Get_AllReady());
+		Set_OppReadyData(_player.Get_CookieType(), _player.Get_MaxHp(), CNetworkManager::Get_Instance()->Get_AllReady());
 		retval = send(sock, (char*)&m_sOppreadydata, sizeof(m_sOppreadydata), 0);
 		if (retval == SOCKET_ERROR) {
 			//err_display("send()");
@@ -78,15 +81,18 @@ public:
 	}
 	void Set_ReadyData(){
 		m_iCookieType = m_sreadydata.cookietype;
+		m_iMaxHp = m_sreadydata.maxhp;
 		m_bClientReady = m_sreadydata.ready;
 	}
-	void Set_OppReadyData(int _Oppcookietype,bool _Oppready) {
+	void Set_OppReadyData(int _Oppcookietype, int _OppMaxHp, bool _Oppready) {
 		m_sOppreadydata.cookietype = _Oppcookietype;
+		m_sOppreadydata.maxhp = _OppMaxHp;
 		m_sOppreadydata.ready = _Oppready;
 	}
 
 private:	
 	int m_iClientNum = 0;
+	int m_iMaxHp;
 	bool m_bClientReady = false;
 	int m_iCookieType;
 	int m_iState;

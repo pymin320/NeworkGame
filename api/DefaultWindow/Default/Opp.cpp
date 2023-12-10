@@ -45,9 +45,9 @@ void COpp::Initialize(void)
 
 	m_tFrame.iFrameStart = 0;
 	m_iJumpFrame = 0;
-	m_fHp = 200;
 
-	CNetworkManager::Get_Instance()->Set_OppHp(m_fHp);
+
+	
 
 	m_BoostCount = 0;
 	m_iDevilJellyCount = 12;
@@ -175,7 +175,7 @@ void COpp::Initialize(void)
 
 const int&& COpp::Update(void)
 {
-	CNetworkManager::Get_Instance()->Set_OppHp(m_fHp);
+	m_fHp = CNetworkManager::Get_Instance()->Get_OppHp();
 
 	//Key_Input();
 	Jumping();
@@ -183,6 +183,9 @@ const int&& COpp::Update(void)
 
 	m_tInfo.fX += m_fSpeed;
 
+	m_tInfo.fX = CNetworkManager::Get_Instance()->Get_OppPosx();
+	m_tInfo.fY = CNetworkManager::Get_Instance()->Get_OppPosy();
+	m_iPlayertype = CNetworkManager::Get_Instance()->Get_OppType();
 
 	if (m_eCurState == WITCH)
 	{

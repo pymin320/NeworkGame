@@ -7,6 +7,7 @@
 #include <stdio.h> // printf(), ...
 #include "ScoreMgr.h"
 #include "Player.h"
+#include "ObjMgr.h"
 #pragma comment(lib, "ws2_32") // ws2_32.lib 링크
 class CNetworkManager
 {
@@ -17,6 +18,9 @@ private:
 public:
 	float Get_OppHp() { return m_fOppHp; }
 	void Set_OppHp(float _fOppHp) { m_fOppHp = _fOppHp; }
+
+	float Get_OppMaxHp() { return m_fOppMaxHp; }
+	void Set_OppMaxHp(float _fOppMaxHp) { m_fOppMaxHp = _fOppMaxHp; }
 
 	float Get_PlayerHp() { return m_fPlayerHp; }
 	void Set_PlayerHp(float _fPlayerHp) { m_fPlayerHp = _fPlayerHp; }
@@ -50,11 +54,12 @@ public:
 
 	bool Get_OppReady() { return m_bOppReady; }
 	void Set_OppReady(bool _bOppReady) { m_bOppReady = _bOppReady; }
+
 	void Send_OppReady(SOCKET sock, bool data) {
 		if (!Get_AllReady()) {
 			int retval;
 			
-			Set_ReadyData(CScoreMgr::Get_CookieType(), data);
+			Set_ReadyData(CScoreMgr::Get_CookieType(), m_fPlayerHp, data);
 			retval = send(sock, (char*)&m_sreadydata, sizeof(m_sreadydata), 0);
 			if (retval == SOCKET_ERROR) {
 				//err_display("send()");
@@ -72,6 +77,7 @@ public:
 			return false;
 		}
 		Set_OppType(m_sOppreadydata.cookietype);
+		Set_OppMaxHp(m_sOppreadydata.maxhp);
 		Set_AllReady(m_sOppreadydata.ready);
 		return Get_AllReady();
 	}
@@ -132,8 +138,9 @@ private:
 		m_splayerdata.posY = _posY;
 		m_splayerdata.state = _state;
 	}
-	void Set_ReadyData(int _cookietype, bool _ready) {
+	void Set_ReadyData(int _cookietype,int _maxhp, bool _ready) {
 		m_sreadydata.cookietype = _cookietype;
+		m_sreadydata.maxhp = _maxhp;
 		m_sreadydata.ready = _ready;
 	}
 
@@ -144,7 +151,7 @@ private:
 	};
 	//enum STATE { IDLE, WALK, JUMP, DOUBLEJUMP, SLIDE, DEAD, BOOST, GIGA, DEVIL, REVIVE, WITCH, STATE_END };
 	struct m_sReadyData {
-		int cookietype;
+		int cookietype,maxhp;
 		bool ready;
 	};
 	m_sPlayerData m_splayerdata;
@@ -153,6 +160,7 @@ private:
 	m_sReadyData m_sOppreadydata;
 
 	float m_fOppHp;			//상대 hp
+	float m_fOppMaxHp;			//상대 hp
 	float m_fPlayerHp;		//내 hp
 	int m_iOppType;			//상대 쿠키 타입
 	int m_iPlayerState;		//내 상태
