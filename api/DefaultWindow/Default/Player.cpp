@@ -539,7 +539,6 @@ void CPlayer::Late_Update(void)
 	Update_Rect();
 }
 
-// 충돌 체크 (기본)
 void CPlayer::Collision()
 {
 	if (!m_bCollision && m_iPlayertype != BOOST && m_eCurState != DEVIL && m_iPlayertype != GIGA && m_eCurState != WITCH)
@@ -570,7 +569,6 @@ void CPlayer::Collision()
 	}
 }
 
-// 충돌 체크 (악마)
 void CPlayer::CollisionDevil()
 {
 	if (m_eCurState != DEVIL)
@@ -1116,7 +1114,6 @@ void CPlayer::Key_Input(void)
 	}
 }
 
-// 플레이어 점프
 void CPlayer::Jumping(void)
 {
 	float		fY = 0.f;

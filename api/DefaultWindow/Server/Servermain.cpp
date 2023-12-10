@@ -17,6 +17,11 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 	int addrlen;
 	char buf[BUFSIZE + 1];
 
+	bool SpaceKeyPressed = false;
+	bool DownArrowKeyPressed = false;
+
+	char key_buffer[2] = "";
+
 	bool boolValue = false;
 
 	// 클라이언트 정보 얻기
@@ -62,12 +67,25 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 			else if (retval == 0)
 				break;
 
+			// 방향키 입력 처리
+			bool space_check = (GetAsyncKeyState(VK_SPACE) & 0x8001) != 0;
+			bool down_check = (GetAsyncKeyState(VK_DOWN) & 0x8001) != 0;
+
+			if (space_check != SpaceKeyPressed || down_check != DownArrowKeyPressed) {
+				SpaceKeyPressed = space_check;
+				DownArrowKeyPressed = down_check; 
+
+				key_buffer[0] = SpaceKeyPressed ? VK_SPACE : 0;
+				key_buffer[1] = DownArrowKeyPressed ? VK_DOWN : 0;
+
+				int dataSize = sizeof(key_buffer);
+				send(client_sock, key_buffer, sizeof(char), 0);
+			}
+
 			player1->Set_PlayerData();
-			if (player1->Get_Hp() >= 0 && player1->Get_Collide() == true)
-				printf("[클라1] 체력: %d, 코인: %d, 점수: %d, 상태: %d\n 위치X값: %f, 위치Y값: %f, 충돌여부: %d\n",
-					player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), 
-					player1->Get_State(), player1->Get_Posx(), player1->Get_Posy(),
-					player1->Get_Collide());
+			if (player1->Get_Hp() >= 0 && key_buffer[0] == VK_SPACE /* && key_buffer[1] == VK_DOWN*/) // 테스트 SPACE 눌리면 출력. 
+				printf("[클라1] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
+					player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), player1->Get_State(),player1->Get_Posx(),player1->Get_Posy());
 
 			//상대 데이터 전송
 			retval = send(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata), 0);
@@ -140,11 +158,9 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 				break;
 
 			player2->Set_PlayerData();
-			if (player2->Get_Hp() >= 0 && player2->Get_Collide() == true)
+			if (player2->Get_Hp() <= 0) // 테스트 위해 출력 안하도록 일단 해둠.
 				printf("[클라2] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
-					player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), 
-					player2->Get_State(), player2->Get_Posx(), player2->Get_Posy(),
-					player2->Get_Collide());
+					player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), player2->Get_State(), player2->Get_Posx(), player2->Get_Posy());
 
 			//상대 데이터 전송
 			retval = send(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata), 0);
@@ -216,7 +232,6 @@ int main(int argc, char* argv[])
 		printf("\n[TCP 서버] 클라이언트 접속: IP 주소=%s, 포트 번호=%d\n",
 			addr, ntohs(clientaddr.sin_port));
 
-		// Thread 생성
 		++ClientNum;
 		if (1 == ClientNum) {
 			//player1 = new CPlayer();

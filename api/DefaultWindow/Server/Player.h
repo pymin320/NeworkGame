@@ -7,8 +7,7 @@ private:
 	struct m_sPlayerData {
 		float posX, posY;
 		int hp, coin, score, state;
-		bool collide;
-	};
+	};  
 	struct m_sReadyData {
 		int cookietype;
 		bool ready;
@@ -49,10 +48,6 @@ public:
 
 	float Get_Posy() { return m_fposY; }
 	void Set_Posy(float _fposY) { m_fposY = _fposY; }
-
-	bool Get_Collide() { return m_bCollide; }
-	void Set_Collide(bool _bCollide) { m_bCollide = _bCollide; }
-
 	bool Recv_ReadyData(SOCKET sock) {
 		int retval;
 		retval = recv(sock, (char*)&m_sreadydata, sizeof(m_sreadydata), 0);
@@ -80,7 +75,6 @@ public:
 		m_iCoin = m_splayerdata.coin;
 		m_iScore = m_splayerdata.score;
 		m_iState = m_splayerdata.state;
-		m_bCollide = m_splayerdata.collide;
 	}
 	void Set_ReadyData(){
 		m_iCookieType = m_sreadydata.cookietype;
@@ -101,5 +95,4 @@ private:
 	int m_iScore;
 	float m_fposX;
 	float m_fposY;
-	bool m_bCollide;
 };

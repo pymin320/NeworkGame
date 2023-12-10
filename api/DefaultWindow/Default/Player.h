@@ -22,8 +22,7 @@ public:
 	void		Get_PlayerHp(float _Hp) { m_fHp = _Hp; }
 	float		Get_PlayerPosx() { return m_tInfo.fX; }
 	float		Get_PlayerPosy() { return m_tInfo.fY; }
-	bool		Get_PlayerCollide() { return m_bCollision; }
- 	void		Collision();
+	void		Collision();
 	void		CollisionDevil();
 	void		Get_Itemtype(OBJID _Item);
 	int			Set_State();
