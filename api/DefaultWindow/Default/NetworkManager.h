@@ -76,16 +76,19 @@ public:
 	bool Get_AllReady() { return m_bAllReady; }
 	void Set_AllReady(bool _bAllReady) { m_bAllReady = _bAllReady; }
 	bool Recv_AllReady(SOCKET sock, char data[]) {
-		int retval;
-		retval = recv(sock, (char*)&m_sOppreadydata, sizeof(m_sOppreadydata), 0);
-		if (retval == SOCKET_ERROR) {
-			//err_display("recv()");
-			return false;
+		if (!m_bRecvReady) {
+			int retval;
+			retval = recv(sock, (char*)&m_sOppreadydata, sizeof(m_sOppreadydata), 0);
+			if (retval == SOCKET_ERROR) {
+				//err_display("recv()");
+				return false;
+			}
+			Set_OppType(m_sOppreadydata.cookietype);
+			Set_OppMaxHp(m_sOppreadydata.maxhp);
+			Set_AllReady(m_sOppreadydata.ready);
+			m_bRecvReady = true;
+			return Get_AllReady();
 		}
-		Set_OppType(m_sOppreadydata.cookietype);
-		Set_OppMaxHp(m_sOppreadydata.maxhp);
-		Set_AllReady(m_sOppreadydata.ready);
-		return Get_AllReady();
 	}
 
 	void Send_PlayerData(SOCKET sock, char data[]) {
@@ -183,4 +186,5 @@ private:
 	int m_iOppScore;		//상대 점수
 	bool m_bOppReady = false;		//상대 준비상태
 	bool m_bAllReady = false;		//상대,본인 준비 상태
+	bool m_bRecvReady = false;
 };

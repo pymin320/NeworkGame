@@ -48,7 +48,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     inet_pton(AF_INET, SERVERIP, &serveraddr.sin_addr);
     serveraddr.sin_port = htons(SERVERPORT);
     retval = connect(sock, (struct sockaddr*)&serveraddr, sizeof(serveraddr));
-   // if (retval == SOCKET_ERROR) err_quit("connect()");
+    if (retval == SOCKET_ERROR) return 0;
 
     // 데이터 통신에 사용할 변수
     char buf[BUFSIZE + 1];
@@ -124,7 +124,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 pMainGame->Render();
 
 
-
                 if (CNetworkManager::Get_Instance()->Get_OppReady())
                 {
                     CNetworkManager::Get_Instance()->Send_OppReady(sock, CNetworkManager::Get_Instance()->Get_OppReady());
@@ -139,16 +138,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     }
                     CNetworkManager::Get_Instance()->Send_PlayerData(sock, buf);
                     CNetworkManager::Get_Instance()->Recv_OppPlayerData(sock, buf);
-                    CNetworkManager::Get_Instance()->Set_OppType((CNetworkManager::Get_Instance()->Get_OppType()));
+                    //CNetworkManager::Get_Instance()->Set_OppType((CNetworkManager::Get_Instance()->Get_OppType()));
 
-                    if (bSceneChange) {
-                        if (GetAsyncKeyState('P')) {//t
-                            CSceneMgr::Get_Instance()->Scene_Change(SC_LOGO);
-                            CNetworkManager::Get_Instance()->Set_OppReady(false);
-                            CNetworkManager::Get_Instance()->Set_AllReady(false);
-                            bSceneChange = false;
-                        }
-                    }
+                    //if (bSceneChange) {
+                    //    if (GetAsyncKeyState('P')) {//t
+                    //        CSceneMgr::Get_Instance()->Scene_Change(SC_LOGO);
+                    //        CNetworkManager::Get_Instance()->Set_OppReady(false);
+                    //        CNetworkManager::Get_Instance()->Set_AllReady(false);
+                    //        bSceneChange = false;
+                    //    }
+                    //}
                 }
                    // bSceneChange = false;
 

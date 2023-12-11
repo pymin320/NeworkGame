@@ -24,6 +24,7 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 	char buf[BUFSIZE + 1];
 
 	bool boolValue = false;
+	bool boolReady = false;
 
 	// 클라이언트 정보 얻기
 	addrlen = sizeof(clientaddr);
@@ -63,8 +64,11 @@ DWORD WINAPI ProcessClient1(LPVOID arg)
 		}
 
 		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
-			CNetworkManager::Get_Instance()->Set_AllReady(true);
-			player1->Send_ReadyData(client_sock, *player2);
+			if (!boolReady) {
+				CNetworkManager::Get_Instance()->Set_AllReady(true);
+				player1->Send_ReadyData(client_sock, *player2);
+				boolReady = true;
+			}
 			//임의로 클라1에 저장
 			memset(buf, 0, sizeof(buf));
 
@@ -114,6 +118,7 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 	int addrlen;
 	char buf[BUFSIZE + 1];
 	bool boolValue = false;
+	bool boolReady = false;
 
 	// 클라이언트 정보 얻기
 	addrlen = sizeof(clientaddr);
@@ -152,10 +157,11 @@ DWORD WINAPI ProcessClient2(LPVOID arg)
 
 		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
 
-			CNetworkManager::Get_Instance()->Set_AllReady(true);
-
-			player2->Send_ReadyData(client_sock, *player1);
-
+			if (!boolReady) {
+				CNetworkManager::Get_Instance()->Set_AllReady(true);
+				player2->Send_ReadyData(client_sock, *player1);
+				boolReady = true;
+			}
 			//임의로 클라1에 저장
 			memset(buf, 0, sizeof(buf));
 
