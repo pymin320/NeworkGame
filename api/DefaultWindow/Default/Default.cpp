@@ -12,7 +12,7 @@ char* SERVERIP = (char*)"127.0.0.1";
 #define SERVERPORT 9000
 #define BUFSIZE    512
 #define MAX_LOADSTRING 100
-
+bool bSceneChange = false;
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -123,6 +123,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 pMainGame->Late_Update();
                 pMainGame->Render();
 
+
+
                 if (CNetworkManager::Get_Instance()->Get_OppReady())
                 {
                     CNetworkManager::Get_Instance()->Send_OppReady(sock, CNetworkManager::Get_Instance()->Get_OppReady());
@@ -131,11 +133,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     }
                 }
                 if (CNetworkManager::Get_Instance()->Get_AllReady()) {
-                    CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
+                    if (!bSceneChange) {
+                        CSceneMgr::Get_Instance()->Scene_Change(SC_STAGE);
+                        bSceneChange = !bSceneChange; //t
+                    }
                     CNetworkManager::Get_Instance()->Send_PlayerData(sock, buf);
                     CNetworkManager::Get_Instance()->Recv_OppPlayerData(sock, buf);
                     CNetworkManager::Get_Instance()->Set_OppType((CNetworkManager::Get_Instance()->Get_OppType()));
+
+                    if (bSceneChange) {
+                        if (GetAsyncKeyState('P')) {//t
+                            CSceneMgr::Get_Instance()->Scene_Change(SC_LOGO);
+                            CNetworkManager::Get_Instance()->Set_OppReady(false);
+                            CNetworkManager::Get_Instance()->Set_AllReady(false);
+                            bSceneChange = false;
+                        }
+                    }
                 }
+                   // bSceneChange = false;
 
                 dwOldTime = GetTickCount();
             }

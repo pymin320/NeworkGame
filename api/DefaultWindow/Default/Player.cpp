@@ -179,7 +179,8 @@ const int&& CPlayer::Update(void)
 	CNetworkManager::Get_Instance()->Set_PlayerHp(m_fHp);
 	CNetworkManager::Get_Instance()->Set_PlayerPosx(m_tInfo.fX);
 	CNetworkManager::Get_Instance()->Set_PlayerPosy(m_tInfo.fY);
-	CNetworkManager::Get_Instance()->Set_PlayerState(m_eCurState);
+	CNetworkManager::Get_Instance()->Set_PlayerState(m_iPlayertype);
+	CNetworkManager::Get_Instance()->Set_CurState(m_eCurState);
 	//¼öÁ¤
 
 	Key_Input();

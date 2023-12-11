@@ -34,6 +34,12 @@ public:
 	int Get_OppState() { return m_iOppState; }
 	void Set_OppState(int _fOppState) { m_iOppState = _fOppState; }
 
+	int Get_CurState() { return m_iCurState; }
+	void Set_CurState(int _iCurState) { m_iCurState = _iCurState; }
+
+	int Get_OppCurState() { return m_iOppCurState; }
+	void Set_OppCurState(int _fOppCurState) { m_iOppCurState = _fOppCurState; }
+
 	float Get_PlayerPosx() { return m_fPlayerPosx; }
 	void Set_PlayerPosx(float _fPlayerPosx) { m_fPlayerPosx = _fPlayerPosx; }
 
@@ -85,7 +91,7 @@ public:
 	void Send_PlayerData(SOCKET sock, char data[]) {
 		int retval;
 
-		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score(), m_fPlayerPosx, m_fPlayerPosy ,m_iPlayerState);
+		Set_PlayerData(m_fPlayerHp, CScoreMgr::Get_Coin(), CScoreMgr::Get_Score(), m_fPlayerPosx, m_fPlayerPosy ,m_iPlayerState, m_iCurState);
 		retval = send(sock, (char*)&m_splayerdata, sizeof(m_splayerdata), 0);
 		if (retval == SOCKET_ERROR) {
 			//err_display("send()");
@@ -105,6 +111,7 @@ public:
 		Set_OppPosx(m_sOppplayerdata.posX);
 		Set_OppPosy(m_sOppplayerdata.posY);
 		Set_OppState(m_sOppplayerdata.state);
+		Set_OppCurState(m_sOppplayerdata.curstate);
 	}
 
 
@@ -130,13 +137,14 @@ public:
 
 private:
 	static CNetworkManager*			m_pInstance;
-	void Set_PlayerData(int _hp, int _coin, int _score, float _posX, float _posY, int _state) {
+	void Set_PlayerData(int _hp, int _coin, int _score, float _posX, float _posY, int _state, int _curstate) {
 		m_splayerdata.hp = _hp;
 		m_splayerdata.coin = _coin;
 		m_splayerdata.score = _score;
 		m_splayerdata.posX = _posX;
 		m_splayerdata.posY = _posY;
 		m_splayerdata.state = _state;
+		m_splayerdata.curstate = _curstate;
 	}
 	void Set_ReadyData(int _cookietype,int _maxhp, bool _ready) {
 		m_sreadydata.cookietype = _cookietype;
@@ -147,7 +155,7 @@ private:
 private:
 	struct m_sPlayerData {
 		float posX, posY;
-		int hp, coin, score, state;
+		int hp, coin, score, state, curstate;
 	};
 	//enum STATE { IDLE, WALK, JUMP, DOUBLEJUMP, SLIDE, DEAD, BOOST, GIGA, DEVIL, REVIVE, WITCH, STATE_END };
 	struct m_sReadyData {
@@ -165,6 +173,8 @@ private:
 	int m_iOppType;			//상대 쿠키 타입
 	int m_iPlayerState;		//내 상태
 	int m_iOppState;		//상대 상태(점프인가 뛰는건가)
+	int m_iOppCurState;		//상대 상태 --
+	int m_iCurState;		//내 상태 --
 	float m_fPlayerPosx;	//내 위치x
 	float m_fPlayerPosy;	//내 위치y
 	float m_fOppPosx;		//상대 위치x

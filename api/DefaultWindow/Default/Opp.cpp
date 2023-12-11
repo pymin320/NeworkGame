@@ -185,7 +185,16 @@ const int&& COpp::Update(void)
 
 	m_tInfo.fX = CNetworkManager::Get_Instance()->Get_OppPosx();
 	m_tInfo.fY = CNetworkManager::Get_Instance()->Get_OppPosy();
-	m_iPlayertype = CNetworkManager::Get_Instance()->Get_OppType();
+	m_iPlayertype = CNetworkManager::Get_Instance()->Get_OppState();
+
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		m_eCurState = SLIDE;
+	}
+	else
+	{
+		m_eCurState = (STATE)CNetworkManager::Get_Instance()->Get_OppCurState();
+	}
 
 	if (m_eCurState == WITCH)
 	{
@@ -214,7 +223,7 @@ const int&& COpp::Update(void)
 	{
 		m_fHp -= 0.1f;
 	}
-
+	
 
 	m_tFontInfo.fX = m_tInfo.fX - 30;
 	m_tFontInfo.fY = m_tInfo.fY - 120;
@@ -722,6 +731,22 @@ void COpp::Render(HDC hDC)
 			return;
 		}
 	}
+
+	else if (m_eCurState == SLIDE)
+	{
+		GdiTransparentBlt(hDC,
+			int(m_tRect.left + iScrollX),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top + 10),
+			int(m_tInfo.fCX),
+			int(m_tInfo.fCY),
+			hMemDC,
+			10 * 366 + 70,			// 비트맵 출력 시작 좌표, X,Y
+			550 - 366 + 70,
+			(int)m_tInfo.fCX,		// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(255, 0, 200));
+	}
+
 	else if (m_iPlayertype == GIGA && m_eCurState == JUMP)
 	{
 		GdiTransparentBlt(hDC,
@@ -793,20 +818,6 @@ void COpp::Render(HDC hDC)
 			(int)m_tInfo.fCY + 80,
 			RGB(255, 0, 200));
 	}
-	else if (m_bSlide)
-	{
-		GdiTransparentBlt(hDC,
-			int(m_tRect.left + iScrollX),	// 2,3 인자 :  복사받을 위치 X, Y
-			int(m_tRect.top + 10),
-			int(m_tInfo.fCX),
-			int(m_tInfo.fCY),
-			hMemDC,
-			10 * 366 + 70,			// 비트맵 출력 시작 좌표, X,Y
-			550 - 366 + 70,
-			(int)m_tInfo.fCX,		// 복사할 비트맵의 가로, 세로 길이
-			(int)m_tInfo.fCY,
-			RGB(255, 0, 200));
-	}
 	else if (m_iPlayertype == BOOST)
 	{
 		GdiTransparentBlt(hDC,
@@ -858,15 +869,15 @@ void COpp::Render(HDC hDC)
 		else if (m_iPlayertype == GIGA)
 		{
 			GdiTransparentBlt(hDC,
-				int(m_tRect.left + iScrollX),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tRect.left + 100),	// 2,3 인자 :  복사받을 위치 X, Y
 				int(m_tRect.top + iScrollY),
-				int(m_tInfo.fCX),
-				int(m_tInfo.fCY),
+				int(300),
+				int(340),
 				hMemDC5,
 				m_tFrame.iFrameStart * 720 + 220,			// 비트맵 출력 시작 좌표, X,Y
 				1100,
-				(int)m_tInfo.fCX,		// 복사할 비트맵의 가로, 세로 길이
-				(int)m_tInfo.fCY,
+				300,		// 복사할 비트맵의 가로, 세로 길이
+				340,
 				RGB(255, 0, 200));
 		}
 		else  if (m_eCurState != WITCH)
@@ -1071,7 +1082,7 @@ void COpp::Key_Input(void)
 		}
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) && m_eCurState == WALK && m_iPlayertype != GIGA && m_eCurState != WITCH)
+	if (GetAsyncKeyState(VK_DOWN))
 	{
 		m_tInfo.fCX = 180;
 		m_tInfo.fCY = 100;

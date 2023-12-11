@@ -1,3 +1,5 @@
-﻿  Servermain.cpp
+﻿  Player.cpp
+  Servermain.cpp
 C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Server\Servermain.cpp(233,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+  코드를 생성하고 있습니다...
   Server.vcxproj -> C:\Users\ym\Desktop\NetworkGame\NeworkGame\api\DefaultWindow\Debug\Server.exe

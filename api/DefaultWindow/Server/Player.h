@@ -6,7 +6,7 @@ class CPlayer
 private:
 	struct m_sPlayerData {
 		float posX, posY;
-		int hp, coin, score, state;
+		int hp, coin, score, state, curstate;
 	};  
 	struct m_sReadyData {
 		int cookietype, maxhp;
@@ -46,6 +46,9 @@ public:
 	void Set_State(int _iState) { m_iState = _iState; };
 	//enum STATE { IDLE, WALK, JUMP, DOUBLEJUMP, SLIDE, DEAD, BOOST, GIGA, DEVIL, REVIVE, WITCH, STATE_END };
 
+	int Get_CurState() { return m_iCurState; };
+	void Set_CurState(int _iCurState) { m_iCurState = _iCurState; };
+
 	float Get_Posx() { return m_fposX; }
 	void Set_Posx(float _fposX) { m_fposX = _fposX; }
 
@@ -78,6 +81,7 @@ public:
 		m_iCoin = m_splayerdata.coin;
 		m_iScore = m_splayerdata.score;
 		m_iState = m_splayerdata.state;
+		m_iCurState = m_splayerdata.curstate;
 	}
 	void Set_ReadyData(){
 		m_iCookieType = m_sreadydata.cookietype;
@@ -96,6 +100,7 @@ private:
 	bool m_bClientReady = false;
 	int m_iCookieType;
 	int m_iState;
+	int m_iCurState;
 	int m_iHp;
 	int m_iCoin;
 	int m_iScore;
