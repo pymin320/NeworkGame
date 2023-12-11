@@ -5,6 +5,12 @@
 #include "Default.h"
 #include "MainGame.h"
 
+<<<<<<< Updated upstream
+=======
+char* SERVERIP = (char*)"192.168.80.53";
+#define SERVERPORT 9000
+#define BUFSIZE    512
+>>>>>>> Stashed changes
 #define MAX_LOADSTRING 100
 
 // 전역 변수:

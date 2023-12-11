@@ -8,6 +8,205 @@
 CPlayer player1; //player1
 CPlayer player2; //player2
 
+<<<<<<< Updated upstream
+=======
+HANDLE hEvent1, hEvent2;
+CRITICAL_SECTION cs;
+
+CPlayer* player1 = new CPlayer();
+CPlayer* player2 = new CPlayer();
+
+int check1, check2;
+bool playerturn = true;
+
+DWORD WINAPI ProcessClient1(LPVOID arg)
+{
+	int retval;
+	SOCKET client_sock = (SOCKET)arg;
+	struct sockaddr_in clientaddr;
+	char addr[INET_ADDRSTRLEN];
+	int addrlen;
+	char buf[BUFSIZE + 1];
+
+	bool boolValue = false;
+	bool boolReady = false;
+
+	// 클라이언트 정보 얻기
+	addrlen = sizeof(clientaddr);
+	getpeername(client_sock, (struct sockaddr*)&clientaddr, &addrlen);
+	inet_ntop(AF_INET, &clientaddr.sin_addr, addr, sizeof(addr));
+
+	//게임 시작 받기
+	retval = recv(client_sock, buf, BUFSIZE, 0);
+	if (retval == SOCKET_ERROR) {
+		//err_display("recv()");
+	}
+
+	buf[retval] = '\0';
+	printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port),buf);
+	
+	memset(buf, 0, sizeof(buf));
+
+	while (1) {
+		if (!boolValue) {
+			// 데이터 받기
+			boolValue = player1->Recv_ReadyData(client_sock);
+
+			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
+			printf("쿠키타입: %d, 최대체력: %d\n", player1->Get_CookieType(), player1->Get_MaxHp());
+			if (boolValue) {
+				EnterCriticalSection(&cs);
+				player1->Set_PlayerReady(true);
+				playerturn = false;
+				LeaveCriticalSection(&cs);
+			}
+		}
+
+		EnterCriticalSection(&cs);
+		if (!playerturn) {
+			LeaveCriticalSection(&cs);
+			continue;
+		}
+
+		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
+			if (!boolReady) {
+				CNetworkManager::Get_Instance()->Set_AllReady(true);
+				player1->Send_ReadyData(client_sock, *player2);
+				boolReady = true;
+			}
+			//임의로 클라1에 저장
+			memset(buf, 0, sizeof(buf));
+
+			// 데이터 받기
+			retval = recv(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata), 0);
+			if (retval == SOCKET_ERROR) {
+				//err_display("recv()");
+				break;
+			}
+			else if (retval == 0)
+				break;
+
+			player1->Set_PlayerData();
+			++check1;
+			if (player1->Get_Hp() >= 0) {
+				//printf("[클라1 - %d] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
+					//check1, player1->Get_Hp(), player1->Get_Coin(), player1->Get_Score(), player1->Get_State(), player1->Get_Posx(), player1->Get_Posy());
+			}
+			//상대 데이터 전송
+			retval = send(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata), 0);
+			if (retval == SOCKET_ERROR) {
+				//err_display("send()");
+				break;
+			}
+			else if (retval == 0)
+				break;
+			EnterCriticalSection(&cs);
+			playerturn = false;
+			LeaveCriticalSection(&cs);
+		}
+		LeaveCriticalSection(&cs);
+	}
+	// 소켓 닫기
+	closesocket(client_sock);
+	printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트 번호=%d\n",
+		addr, ntohs(clientaddr.sin_port));
+	
+	return 0;
+}
+
+DWORD WINAPI ProcessClient2(LPVOID arg)
+{
+	int retval;
+	SOCKET client_sock = (SOCKET)arg;
+	struct sockaddr_in clientaddr;
+	char addr[INET_ADDRSTRLEN];
+	int addrlen;
+	char buf[BUFSIZE + 1];
+	bool boolValue = false;
+	bool boolReady = false;
+
+	// 클라이언트 정보 얻기
+	addrlen = sizeof(clientaddr);
+	getpeername(client_sock, (struct sockaddr*)&clientaddr, &addrlen);
+	inet_ntop(AF_INET, &clientaddr.sin_addr, addr, sizeof(addr));
+
+	retval = recv(client_sock, buf, BUFSIZE, 0);
+	if (retval == SOCKET_ERROR) {
+		//err_display("recv()");
+	}
+
+	buf[retval] = '\0';
+	printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), buf);
+
+	memset(buf, 0, sizeof(buf));
+	while (1) {
+		if (!boolValue) {
+			// 데이터 받기
+			boolValue = player2->Recv_ReadyData(client_sock);
+
+			printf("[TCP/%s:%d] %s\n", addr, ntohs(clientaddr.sin_port), boolValue ? "true" : "false");
+			printf("쿠키타입: %d, 최대체력: %d\n", player2->Get_CookieType(), player2->Get_MaxHp());
+			if (boolValue) {
+				EnterCriticalSection(&cs);
+				player2->Set_PlayerReady(true);
+				playerturn = true; 
+				LeaveCriticalSection(&cs); 
+			}
+		}
+
+		EnterCriticalSection(&cs);
+		if (playerturn) {
+			LeaveCriticalSection(&cs);
+			continue; 
+		}
+
+		if (player1->Get_PlayerReady() && player2->Get_PlayerReady()) {
+
+			if (!boolReady) {
+				CNetworkManager::Get_Instance()->Set_AllReady(true);
+				player2->Send_ReadyData(client_sock, *player1);
+				boolReady = true;
+			}
+			//임의로 클라1에 저장
+			memset(buf, 0, sizeof(buf));
+
+			// 데이터 받기
+			retval = recv(client_sock, reinterpret_cast<char*>(&player2->m_splayerdata), sizeof(player2->m_splayerdata), 0);
+			if (retval == SOCKET_ERROR) {
+				//err_display("recv()");
+				break;
+			}
+			else if (retval == 0)
+				break;
+
+			player2->Set_PlayerData();
+			++check2;
+			if (player2->Get_Hp() >= 0) {
+				//printf("[클라2 - %d] 체력: %d, 코인: %d, 점수: %d, 상태: %d, 위치X값: %f, 위치Y값: %f\n",
+					//check2, player2->Get_Hp(), player2->Get_Coin(), player2->Get_Score(), player2->Get_State(), player2->Get_Posx(), player2->Get_Posy());
+			}
+			//상대 데이터 전송
+			retval = send(client_sock, reinterpret_cast<char*>(&player1->m_splayerdata), sizeof(player1->m_splayerdata), 0);
+			if (retval == SOCKET_ERROR) {
+				//err_display("send()");
+				break;
+			}
+			else if (retval == 0)
+				break;
+			EnterCriticalSection(&cs); // 임계 영역 진입
+			playerturn = true; // 플레이어 1의 차례로 변경
+			LeaveCriticalSection(&cs); // 임계 영역 빠져나옴
+		}
+		LeaveCriticalSection(&cs); // 임계 영역 빠져나옴
+	}
+	// 소켓 닫기
+	closesocket(client_sock);
+	printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트 번호=%d\n",
+		addr, ntohs(clientaddr.sin_port));
+
+	return 0;
+}
+>>>>>>> Stashed changes
 
 int main(int argc, char* argv[])
 {
